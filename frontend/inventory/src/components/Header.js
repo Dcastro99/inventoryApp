@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material'
 export default function Header() {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Typography variant="h3">This is the header</Typography>
+      <Typography variant="h3">My Inventory App</Typography>
     </Box>
   )
 }
