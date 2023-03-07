@@ -1,15 +1,25 @@
-import { Box, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
+import { Box } from '@mui/material'
+import Products from './Products'
+import BasicTable from './InventoryTable'
+
+
 
 export default function Home() {
+
+
   return (
     <Box sx={{
-      backgroundColor: 'pink',
+      // backgroundColor: 'pink',
       display: 'flex',
+      flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
     }}>
-      <Typography variant="h4">Login</Typography>
+      <BasicTable />
+      <Products />
     </Box>
+
+
   )
 }

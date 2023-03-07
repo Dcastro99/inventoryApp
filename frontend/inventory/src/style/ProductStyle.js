@@ -1,5 +1,14 @@
 
 export const ProductStyle = {
+  mainBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    transform: 'translate(-50%, -50%)',
+    position: 'absolute',
+    top: '50%',
+    left: '50%'
+  },
   paper: {
     padding: '30px 20px',
     width: 300,
