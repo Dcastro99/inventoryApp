@@ -1,24 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Box, Typography, Modal, Button, TextField, Select, MenuItem, Grid, Paper, InputLabel } from '@mui/material'
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import { ProductStyle } from '../style/ProductStyle';
+import ProductContext from '../context/productContext';
 
 export default function Products() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const { addProduct } = useContext(ProductContext);
 
   //add product handler
   const addProductHandler = (e) => {
     e.preventDefault();
     // console.log('EVENT', e.target.product_name.value)
     const formData = e.target;
-    const newProduct = {
-      product_name: formData.product_name.value,
-      uom: formData.unit_of_measure.value,
-      qty: formData.product_quantity.value
-    }
-    console.log('NEW PRODUCT', newProduct)
+    addProduct(
+      formData.product_name.value,
+      formData.unit_of_measure.value,
+      formData.product_quantity.value
+    )
+    console.log('NEW PRODUCT', addProduct)
+    setOpen(false);
   }
 
 

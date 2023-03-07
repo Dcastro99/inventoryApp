@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import ProductContext from '../context/productContext';
 
-function createData(productName, uom, qty) {
-  return { productName, uom, qty };
-}
 
-const rows = [
-  createData('Tomatoe Sauce', 'can', 2),
-  createData('Rice', 'bag', 1),
-  createData('Chicken Broth', 'can', 3),
-];
+// function createData(productName, uom, qty) {
+//   return { productName, uom, qty };
+// }
+
+
+
+// const rows = [
+//   createData('Tomatoe Sauce', 'can', 2),
+//   createData('Rice', 'bag', 1),
+//   createData('Chicken Broth', 'can', 3),
+// ];
 
 export default function BasicTable() {
+  const { products } = useContext(ProductContext);
+  console.log('WHat are you', products);
+  // let [item] = products;
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -25,18 +32,20 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {products.length > 0 ? (products.map((row) => (
+
             <TableRow
-              key={row.name}
+              // key={products.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
+              {console.log('ROW', row)}
               <TableCell component="th" scope="row">
                 {row.productName}
               </TableCell>
               <TableCell align="right">{row.uom}</TableCell>
               <TableCell align="right">{row.qty}</TableCell>
             </TableRow>
-          ))}
+          ))) : (<>nothing here</>)}
         </TableBody>
       </Table>
     </TableContainer>
