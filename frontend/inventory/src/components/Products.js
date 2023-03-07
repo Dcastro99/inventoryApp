@@ -13,7 +13,7 @@ export default function Products() {
   //add product handler
   const addProductHandler = (e) => {
     e.preventDefault();
-    // console.log('EVENT', e.target.product_name.value)
+    console.log('EVENT', e.target)
     const formData = e.target;
     addProduct(
       formData.product_name.value,
@@ -67,10 +67,10 @@ export default function Products() {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={10}>Can</MenuItem>
-                    <MenuItem value={20}>Bag</MenuItem>
-                    <MenuItem value={30}>Oz</MenuItem>
-                    <MenuItem value={40}>Bottle</MenuItem>
+                    <MenuItem value={1}>Can</MenuItem>
+                    <MenuItem value={2}>Bag</MenuItem>
+                    <MenuItem value={3}>Oz</MenuItem>
+                    <MenuItem value={4}>Bottle</MenuItem>
                   </Select>
                   <Typography variant='h5' sx={ProductStyle.formtext}>Quantity</Typography>
                   <TextField label='Quantity' type='number' name='product_quantity' sx={ProductStyle.numberTextFiled} />
