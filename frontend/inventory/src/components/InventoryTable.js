@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Button } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ProductContext from '../context/productContext';
+import EditModal from './EditModal';
 
 
 export default function BasicTable() {
@@ -10,6 +11,7 @@ export default function BasicTable() {
 
   const editItem = (product) => {
     console.log('editItem', product);
+    <EditModal item={product} />
   }
 
   return (
