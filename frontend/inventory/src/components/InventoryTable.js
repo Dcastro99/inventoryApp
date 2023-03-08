@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Button } from '@mui/material';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ProductContext from '../context/productContext';
 import EditModal from './EditModal';
 
@@ -9,10 +8,10 @@ export default function BasicTable() {
   const { products } = useContext(ProductContext);
   console.log('WHat are you', products);
 
-  const editItem = (product) => {
-    console.log('editItem', product);
-    <EditModal item={product} />
-  }
+  // const editItem = (item) => {
+  //   console.log('editItem', item);
+  //   <EditModal item={item} />
+  // }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: 10 }}>
@@ -42,9 +41,10 @@ export default function BasicTable() {
                   <TableCell align="center">{row.uom}</TableCell>
                   <TableCell align="right" sx={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginRight: 2 }}>{row.qty}</TableCell>
                   <TableCell align="center">
-                    <Button onClick={() => { editItem(row) }} >
-                      <EditOutlinedIcon />
-                    </Button>
+                    {console.log('PRODUCT', row)}
+                    {/* <Button onClick={() => { editItem(row) }} > */}
+                    <EditModal item={row} />
+                    {/* </Button> */}
                   </TableCell>
                 </TableRow>
               </TableBody>

@@ -3,14 +3,16 @@ import { Box, Typography, Modal, Button, TextField, Select, MenuItem, Grid, Pape
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import { ProductStyle } from '../style/ProductStyle';
 import ProductContext from '../context/productContext';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
-export default function EditModal(item) {
+
+export default function EditModal(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { addProduct } = useContext(ProductContext);
   // const { deleteProduct } = useContext(ProductContext);
-
+  console.log('item in EditModal', props.item)
   //add product handler
   const addProductHandler = (e) => {
     e.preventDefault();
@@ -33,7 +35,7 @@ export default function EditModal(item) {
       alignItems: 'center',
     }}>
       <Box  >
-        <Button sx={{ color: 'Tomato', backgroundColor: 'WhiteSmoke', marginTop: 5 }} onClick={handleOpen}>Add Product</Button>
+        <Button sx={{ color: 'Tomato', backgroundColor: 'WhiteSmoke', marginTop: 5 }} onClick={handleOpen}><EditOutlinedIcon /></Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -48,12 +50,12 @@ export default function EditModal(item) {
                 </Grid>
                 <form onSubmit={addProductHandler}>
                   <Typography variant='h5' sx={ProductStyle.formtext}>Product</Typography>
-                  <TextField label='Product Name' placeholder={item.productName} name='product_name' fullWidth sx={ProductStyle.textFiled} />
+                  <TextField label='Product Name' name='product_name' fullWidth sx={ProductStyle.textFiled} />
                   <Typography variant='h5' sx={ProductStyle.formtext}>Unit of Measure</Typography>
                   <InputLabel id="demo-simple-select-helper-label" >Unit of Measure</InputLabel>
                   <Select
                     sx={{ width: 150 }}
-                    placeholder={item.uom}
+                    placeholder={props.item.uom}
                     name='unit_of_measure'
                     label="Unit of Measure"
                   >
@@ -67,7 +69,7 @@ export default function EditModal(item) {
                     <MenuItem value={'Box'}>Box</MenuItem>
                   </Select>
                   <Typography variant='h5' sx={ProductStyle.formtext}>Quantity</Typography>
-                  <TextField label='Quantity' type='number' name='product_quantity' placeholder={item.quantity} sx={ProductStyle.numberTextFiled} />
+                  <TextField label='Quantity' type='number' name='product_quantity' placeholder={props.item.quantity} sx={ProductStyle.numberTextFiled} />
                   <Button sx={ProductStyle.button} type='submit' variant='contained' color='primary' fullWidth >Add Product</Button>
                 </form>
 
