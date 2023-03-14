@@ -57,7 +57,17 @@ export default function BasicTable() {
                     {/* </Button> */}
                   </TableCell>
                   <TableCell align="left">
-                    <Button onClick={() => { deleteItem(row) }}> <DeleteForeverIcon /></Button>
+                    <Button sx={{
+                      backgroundColor: '#676767',
+                      color: 'Tomato',
+                      borderRadius: '10px',
+                      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+                      '&:hover': {
+                        backgroundColor: 'white',
+                        color: 'Tomato',
+                        boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+                      },
+                    }} onClick={() => { deleteItem(row) }}> <DeleteForeverIcon /></Button>
 
                   </TableCell>
                 </TableRow>

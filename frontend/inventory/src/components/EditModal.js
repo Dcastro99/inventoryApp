@@ -49,7 +49,17 @@ export default function EditModal(props) {
       alignItems: 'center',
     }}>
       <Box  >
-        <Button sx={{ color: 'Tomato', backgroundColor: 'WhiteSmoke' }} onClick={handleOpen}><EditOutlinedIcon /></Button>
+        <Button sx={{
+          backgroundColor: '#676767',
+          color: 'Tomato',
+          borderRadius: '10px',
+          boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+          '&:hover': {
+            backgroundColor: 'white',
+            color: 'Tomato',
+            boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+          },
+        }} onClick={handleOpen}><EditOutlinedIcon /></Button>
         <Modal
           open={open}
           onClose={handleClose}
