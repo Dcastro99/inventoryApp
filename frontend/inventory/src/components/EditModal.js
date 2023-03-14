@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Box, Typography, Modal, Button, TextField, Select, MenuItem, Grid, Paper, InputLabel } from '@mui/material'
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import { ProductStyle } from '../style/ProductStyle';
@@ -10,22 +10,36 @@ export default function EditModal(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { addProduct } = useContext(ProductContext);
-  // const { deleteProduct } = useContext(ProductContext);
+  const [newName, setNewName] = useState('');
+  const [newQty, setNewQty] = useState('');
+  const [newUnit, setNewUnit] = useState('');
+  // const { addProduct } = useContext(ProductContext);
+  const { updateProduct } = useContext(ProductContext);
   console.log('item in EditModal', props.item)
   //add product handler
-  const addProductHandler = (e) => {
+  console.log('newName', newName)
+  const updateProductHandler = (e) => {
+    let id = props.item.id
     e.preventDefault();
     const formData = e.target;
-    addProduct(
+    console.log('formData------>', formData)
+    updateProduct(
       formData.product_name.value,
       formData.unit_of_measure.value,
-      formData.product_quantity.value
+      formData.product_quantity.value,
+      id
     )
+
     setOpen(false);
   }
 
 
+
+  useEffect(() => {
+    setNewName(props.item.productName)
+    setNewQty(props.item.productQty)
+    setNewUnit(props.item.productUom)
+  }, [props.item.productName, props.item.productQty, props.item.productUom])
 
   return (
     <Box sx={{
@@ -35,7 +49,7 @@ export default function EditModal(props) {
       alignItems: 'center',
     }}>
       <Box  >
-        <Button sx={{ color: 'Tomato', backgroundColor: 'WhiteSmoke', marginTop: 5 }} onClick={handleOpen}><EditOutlinedIcon /></Button>
+        <Button sx={{ color: 'Tomato', backgroundColor: 'WhiteSmoke' }} onClick={handleOpen}><EditOutlinedIcon /></Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -48,17 +62,21 @@ export default function EditModal(props) {
                 <Grid align='center'>
                   <AddCircleOutlinedIcon sx={ProductStyle.addIcon} />
                 </Grid>
-                <form onSubmit={addProductHandler}>
+                <form onSubmit={(e) => { updateProductHandler(e) }}>
                   <Typography variant='h5' sx={ProductStyle.formtext}>Product</Typography>
-                  <TextField label='Product Name' name='product_name' fullWidth sx={ProductStyle.textFiled} />
-                  <Typography variant='h5' sx={ProductStyle.formtext}>Unit of Measure</Typography>
+                  <TextField name='product_name' onChange={(e) => setNewName(e.target.value)} fullWidth sx={ProductStyle.textFiled} value={newName} >
+                    {newName}
+                  </TextField>
+                  <Typography variant='h5' sx={ProductStyle.formtext} value={newQty} onChange={(e) => setNewQty(e.target.value)}>Unit of Measure</Typography>
                   <InputLabel id="demo-simple-select-helper-label" >Unit of Measure</InputLabel>
                   <Select
                     sx={{ width: 150 }}
-                    placeholder={props.item.uom}
+                    value={newUnit}
                     name='unit_of_measure'
                     label="Unit of Measure"
+                    onChange={(e) => setNewUnit(e.target.value)}
                   >
+
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
@@ -69,7 +87,7 @@ export default function EditModal(props) {
                     <MenuItem value={'Box'}>Box</MenuItem>
                   </Select>
                   <Typography variant='h5' sx={ProductStyle.formtext}>Quantity</Typography>
-                  <TextField label='Quantity' type='number' name='product_quantity' placeholder={props.item.quantity} sx={ProductStyle.numberTextFiled} />
+                  <TextField label={props.item.qty} type='number' name='product_quantity' sx={ProductStyle.numberTextFiled} />
                   <Button sx={ProductStyle.button} type='submit' variant='contained' color='primary' fullWidth >Add Product</Button>
                 </form>
 

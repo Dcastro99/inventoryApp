@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box } from '@mui/material';
 import ProductContext from '../context/productContext';
 import EditModal from './EditModal';
 
@@ -39,9 +39,9 @@ export default function BasicTable() {
                     {row.productName}
                   </TableCell>
                   <TableCell align="center">{row.uom}</TableCell>
-                  <TableCell align="right" sx={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginRight: 2 }}>{row.qty}</TableCell>
+                  <TableCell align="right" sx={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginRight: 2, marginTop: 1 }}>{row.qty}</TableCell>
                   <TableCell align="center">
-                    {console.log('PRODUCT', row)}
+                    {/* {console.log('PRODUCT', row)} */}
                     {/* <Button onClick={() => { editItem(row) }} > */}
                     <EditModal item={row} />
                     {/* </Button> */}
