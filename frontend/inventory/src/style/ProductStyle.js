@@ -22,7 +22,8 @@ export const ProductStyle = {
   },
   numberTextFiled: {
     margin: '0 0 20px',
-    width: '100px'
+    width: '100px',
+    // backgroundColor: 'pink'
   },
   addIcon: {
     fontSize: 40
