@@ -1,21 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box } from '@mui/material';
 import ProductContext from '../context/productContext';
 import EditModal from './EditModal';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Button from '@mui/material/Button';
 
 
 export default function BasicTable() {
   const { products } = useContext(ProductContext);
+  const [newProducts, setNewProducts] = useState('');
+  // const { deleteProduct } = useContext(ProductContext);
   console.log('WHat are you', products);
 
-  // const editItem = (item) => {
-  //   console.log('editItem', item);
-  //   <EditModal item={item} />
-  // }
+  useEffect(() => {
+    setNewProducts(products)
+  }, [products])
+
+  const deleteItem = (item) => {
+    let itemToBeDelted = item.id;
+    setNewProducts(newProducts.filter((i) => i.id !== itemToBeDelted));
+  }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: 10 }}>
-      {products.length > 0 ? (
+      {newProducts.length > 0 ? (
         <TableContainer component={Paper} >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -24,10 +32,11 @@ export default function BasicTable() {
                 <TableCell align="center">Unit of Measure</TableCell>
                 <TableCell align="right">Quantity</TableCell>
                 <TableCell align="center">Edit</TableCell>
+                <TableCell align="center"></TableCell>
 
               </TableRow>
             </TableHead>
-            {products.map(row => (
+            {newProducts.map(row => (
               <TableBody >
 
                 <TableRow
@@ -44,7 +53,12 @@ export default function BasicTable() {
                     {/* {console.log('PRODUCT', row)} */}
                     {/* <Button onClick={() => { editItem(row) }} > */}
                     <EditModal item={row} />
+
                     {/* </Button> */}
+                  </TableCell>
+                  <TableCell align="left">
+                    <Button onClick={() => { deleteItem(row) }}> <DeleteForeverIcon /></Button>
+
                   </TableCell>
                 </TableRow>
               </TableBody>

@@ -42,6 +42,15 @@ export function ProductProvider({ children }) {
     }
   }
 
+  // const deleteProduct = (productName, uom, qty, id) => {
+  //   let item = products.find((item) => item.id !== id);
+  //   console.log('item>>>>>>>>>>', item)
+
+
+  //   setProducts((prevState) => [...prevState]);
+
+  // }
+
   return (
     <ProductContext.Provider value={{ products, addProduct, updateProduct }}>
       {children}
