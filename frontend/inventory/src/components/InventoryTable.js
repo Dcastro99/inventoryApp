@@ -9,8 +9,8 @@ import Button from '@mui/material/Button';
 export default function BasicTable() {
   const { products } = useContext(ProductContext);
   const [newProducts, setNewProducts] = useState('');
-  // const { deleteProduct } = useContext(ProductContext);
-  console.log('WHat are you', products);
+  const { deleteProduct } = useContext(ProductContext);
+  // console.log('WHat are you', products);
 
   useEffect(() => {
     setNewProducts(products)
@@ -18,7 +18,8 @@ export default function BasicTable() {
 
   const deleteItem = (item) => {
     let itemToBeDelted = item.id;
-    setNewProducts(newProducts.filter((i) => i.id !== itemToBeDelted));
+    deleteProduct(itemToBeDelted);
+
   }
 
   return (
@@ -58,7 +59,7 @@ export default function BasicTable() {
                   </TableCell>
                   <TableCell align="left">
                     <Button sx={{
-                      backgroundColor: '#676767',
+                      backgroundColor: '#B8B8B8',
                       color: 'Tomato',
                       borderRadius: '10px',
                       boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',

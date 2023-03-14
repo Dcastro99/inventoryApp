@@ -20,10 +20,10 @@ export default function Products() {
   const addProductHandler = (e) => {
     e.preventDefault();
     const formData = e.target;
-    console.log('formData--OOOOOO', formData.product_name
-    )
+    // console.log('formData--OOOOOO', formData.product_name
+    // )
     const id = chance.bb_pin();
-    console.log('id_pr.js', id)
+    // console.log('id_pr.js', id)
     addProduct(
       formData.product_name.value,
       formData.unit_of_measure.value,
@@ -43,7 +43,7 @@ export default function Products() {
       alignItems: 'center',
     }}>
       <Box  >
-        <Button sx={{ color: 'Tomato', backgroundColor: 'WhiteSmoke', marginTop: 5 }} onClick={handleOpen}>Add Product</Button>
+        <Button sx={{ color: 'Tomato', backgroundColor: '#B8B8B8', marginTop: 5 }} onClick={handleOpen}>Add Product</Button>
         <Modal
           open={open}
           onClose={handleClose}

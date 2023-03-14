@@ -37,22 +37,16 @@ export function ProductProvider({ children }) {
       setProducts([...products]);
     }
     else {
-
       setProducts((prevState) => [...prevState, { productName, uom, qty, id }]);
     }
   }
 
-  // const deleteProduct = (productName, uom, qty, id) => {
-  //   let item = products.find((item) => item.id !== id);
-  //   console.log('item>>>>>>>>>>', item)
-
-
-  //   setProducts((prevState) => [...prevState]);
-
-  // }
+  const deleteProduct = (id) => {
+    setProducts(products.filter((x) => x.id !== id));
+  }
 
   return (
-    <ProductContext.Provider value={{ products, addProduct, updateProduct }}>
+    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct }}>
       {children}
     </ProductContext.Provider>
   )

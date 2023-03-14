@@ -15,14 +15,14 @@ export default function EditModal(props) {
   const [newUnit, setNewUnit] = useState('');
   // const { addProduct } = useContext(ProductContext);
   const { updateProduct } = useContext(ProductContext);
-  console.log('item in EditModal', props.item)
+  // console.log('item in EditModal', props.item)
   //add product handler
-  console.log('newName', newName)
+  // console.log('newName', newName)
   const updateProductHandler = (e) => {
     let id = props.item.id
     e.preventDefault();
     const formData = e.target;
-    console.log('formData------>', formData)
+    // console.log('formData------>', formData)
     updateProduct(
       formData.product_name.value,
       formData.unit_of_measure.value,
@@ -50,7 +50,7 @@ export default function EditModal(props) {
     }}>
       <Box  >
         <Button sx={{
-          backgroundColor: '#676767',
+          backgroundColor: '#B8B8B8',
           color: 'Tomato',
           borderRadius: '10px',
           boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
