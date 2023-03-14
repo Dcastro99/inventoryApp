@@ -37,9 +37,9 @@ export default function EditModal(props) {
 
   useEffect(() => {
     setNewName(props.item.productName)
-    setNewQty(props.item.productQty)
-    setNewUnit(props.item.productUom)
-  }, [props.item.productName, props.item.productQty, props.item.productUom])
+    setNewQty(props.item.qty)
+    setNewUnit(props.item.uom)
+  }, [props.item.productName, props.item.qty, props.item.uom])
 
   return (
     <Box sx={{
@@ -67,7 +67,7 @@ export default function EditModal(props) {
                   <TextField name='product_name' onChange={(e) => setNewName(e.target.value)} fullWidth sx={ProductStyle.textFiled} value={newName} >
                     {newName}
                   </TextField>
-                  <Typography variant='h5' sx={ProductStyle.formtext} value={newQty} onChange={(e) => setNewQty(e.target.value)}>Unit of Measure</Typography>
+                  <Typography variant='h5' sx={ProductStyle.formtext} >Unit of Measure</Typography>
                   <InputLabel id="demo-simple-select-helper-label" >Unit of Measure</InputLabel>
                   <Select
                     sx={{ width: 150 }}
@@ -87,7 +87,7 @@ export default function EditModal(props) {
                     <MenuItem value={'Box'}>Box</MenuItem>
                   </Select>
                   <Typography variant='h5' sx={ProductStyle.formtext}>Quantity</Typography>
-                  <TextField label={props.item.qty} type='number' name='product_quantity' sx={ProductStyle.numberTextFiled} />
+                  <TextField label="Qty" type='number' name='product_quantity' value={newQty} onChange={(e) => setNewQty(e.target.value)} sx={ProductStyle.numberTextFiled} />
                   <Button sx={ProductStyle.button} type='submit' variant='contained' color='primary' fullWidth >Add Product</Button>
                 </form>
 
