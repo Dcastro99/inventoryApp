@@ -16,14 +16,12 @@ export default function Products() {
   // const { deleteProduct } = useContext(ProductContext);
 
 
-  //add product handler
+  //------------- ADD PRODUCT HANDLER --------------//
+
   const addProductHandler = (e) => {
     e.preventDefault();
     const formData = e.target;
-    // console.log('formData--OOOOOO', formData.product_name
-    // )
     const id = chance.bb_pin();
-    // console.log('id_pr.js', id)
     addProduct(
       formData.product_name.value,
       formData.unit_of_measure.value,

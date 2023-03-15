@@ -15,6 +15,7 @@ export default function Home() {
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
+      marginBottom: 10,
     }}>
       <BasicTable />
       <Products />
