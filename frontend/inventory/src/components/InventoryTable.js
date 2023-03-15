@@ -4,6 +4,7 @@ import ProductContext from '../context/productContext';
 import EditModal from './EditModal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/material/Button';
+import Options from './Options';
 
 
 export default function BasicTable() {
@@ -32,28 +33,29 @@ export default function BasicTable() {
                 <TableCell>Product Name</TableCell>
                 <TableCell align="center">Unit of Measure</TableCell>
                 <TableCell align="right">Quantity</TableCell>
-                <TableCell align="center">Edit</TableCell>
+                <TableCell align="center"></TableCell>
+                <TableCell align="center"></TableCell>
                 <TableCell align="center"></TableCell>
 
               </TableRow>
             </TableHead>
-            {newProducts.map(row => (
+            {newProducts.map(item => (
               <TableBody >
 
                 <TableRow
-                  key={row.name}
+                  key={item.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  {console.log('PRODUCT', row)}
+                  {console.log('PRODUCT', item)}
                   <TableCell component="th" scope="row">
-                    {row.productName}
+                    {item.productName}
                   </TableCell>
-                  <TableCell align="center">{row.uom}</TableCell>
-                  <TableCell align="right" sx={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginRight: 2, marginTop: 1 }}>{row.qty}</TableCell>
+                  <TableCell align="center">{item.uom}</TableCell>
+                  <TableCell align="right" sx={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginRight: 2, marginTop: 1 }}>{item.qty}</TableCell>
                   <TableCell align="center">
                     {/* {console.log('PRODUCT', row)} */}
                     {/* <Button onClick={() => { editItem(row) }} > */}
-                    <EditModal item={row} />
+                    <EditModal item={item} />
 
                     {/* </Button> */}
                   </TableCell>
@@ -68,8 +70,11 @@ export default function BasicTable() {
                         color: 'Tomato',
                         boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
                       },
-                    }} onClick={() => { deleteItem(row) }}> <DeleteForeverIcon /></Button>
+                    }} onClick={() => { deleteItem(item) }}> <DeleteForeverIcon /></Button>
 
+                  </TableCell>
+                  <TableCell>
+                    <Options item={item} />
                   </TableCell>
                 </TableRow>
               </TableBody>
