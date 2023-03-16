@@ -1,5 +1,5 @@
 
-export const ProductStyle = {
+export const OptionStyle = {
   mainBox: {
     display: 'flex',
     justifyContent: 'center',
@@ -7,37 +7,36 @@ export const ProductStyle = {
     transform: 'translate(-50%, -50%)',
     position: 'absolute',
     top: '50%',
-    left: '50%'
+    left: '50%',
+
   },
   paper: {
     padding: '30px 20px',
     width: 300,
     margin: '20px auto',
-    borderRadius: 15
-  },
-  formtext: {
-    margin: '10px 0'
-  },
-  textFiled: {
-    margin: '0 0 20px'
-  },
-  numberTextFiled: {
-    margin: '0 0 20px',
-    width: '100px',
+    borderRadius: 50,
     // backgroundColor: 'pink'
   },
-  addIcon: {
-    fontSize: 40
+
+  mainButton: {
+    color: 'black',
+    borderRadius: '10px',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: '#B8B8B8',
+      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    },
   },
-  button: {
-    backgroundColor: '#676767',
-    color: 'WhiteSmoke',
+  buttons: {
+    backgroundColor: '#B8B8B8',
+    color: 'Tomato',
     borderRadius: '10px',
     boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     '&:hover': {
       backgroundColor: 'white',
-      color: '#676767',
+      color: 'Tomato',
       boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     },
+    margin: 1
   }
 }

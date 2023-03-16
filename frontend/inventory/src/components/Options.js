@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Box, Typography, Modal, Button, TextField, Select, MenuItem, Grid, Paper, InputLabel } from '@mui/material'
-import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
-import { ProductStyle } from '../style/ProductStyle';
+import { Box, Typography, Modal, Button, Grid, Paper } from '@mui/material'
+import { OptionStyle } from '../style/OptionStyle';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import NotesModal from './notes/NotesModal';
 
 
 export default function Options(props) {
@@ -18,24 +18,16 @@ export default function Options(props) {
       justifyContent: 'center',
       alignItems: 'center',
     }}>
-      <Button sx={{
-        color: 'black',
-        borderRadius: '10px',
-        '&:hover': {
-          backgroundColor: 'white',
-          color: '#B8B8B8',
-          boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-        },
-      }} onClick={handleOpen}> <MoreHorizIcon /></Button>
+      <Button sx={OptionStyle.mainButton} onClick={handleOpen}> <MoreHorizIcon /></Button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ProductStyle.mainBox}>
+        <Box sx={OptionStyle.mainBox}>
           <Grid >
-            <Paper elevation={20} style={ProductStyle.paper}>
+            <Paper elevation={20} style={OptionStyle.paper}>
               <Grid align='center'>
                 <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>{props.item.productName} options</Typography>
               </Grid>
@@ -47,8 +39,8 @@ export default function Options(props) {
                 alignItems: 'center',
                 marginTop: 5,
               }}>
-                <Button sx={{ padding: 2 }}>Notes</Button>
-                <Button sx={{ padding: 2 }}>Reminders</Button>
+                <NotesModal />
+                <Button sx={OptionStyle.buttons}>Reminders</Button>
               </Box>
 
             </Paper>
