@@ -6,7 +6,7 @@ import ProductContext from '../context/productContext';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 
-export default function EditModal(props) {
+export default function EditModal({ item }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -19,7 +19,7 @@ export default function EditModal(props) {
   //add product handler
   // console.log('newName', newName)
   const updateProductHandler = (e) => {
-    let id = props.item.id
+    let id = item.id
     e.preventDefault();
     const formData = e.target;
     // console.log('formData------>', formData)
@@ -36,10 +36,10 @@ export default function EditModal(props) {
 
 
   useEffect(() => {
-    setNewName(props.item.productName)
-    setNewQty(props.item.qty)
-    setNewUnit(props.item.uom)
-  }, [props.item.productName, props.item.qty, props.item.uom])
+    setNewName(item.productName)
+    setNewQty(item.qty)
+    setNewUnit(item.uom)
+  }, [item.productName, item.qty, item.uom])
 
   return (
     <Box sx={{

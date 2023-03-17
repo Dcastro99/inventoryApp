@@ -108,6 +108,7 @@ button:hover {
 /* Editing */
 .app-main-note-edit {
   padding: 25px;
+  
 }
 
 .app-main-note-edit input,
@@ -121,6 +122,8 @@ textarea {
   resize: none;
   font-size: inherit;
   font-family: inherit;
+  border-radius: 5px;
+  
 }
 .app-main-note-edit input {
   height: 50px;
@@ -132,15 +135,19 @@ textarea {
   border-top: 1px solid #ddd;
   overflow-y: scroll;
   background: rgba(0, 0, 0, 0.02);
+  /* background-color: aqua; */
+  border-radius: 5px;
 }
 
 .preview-title {
   padding: 25px 25px 0 25px;
   margin: 0;
+  
 }
 
 .markdown-preview {
   padding: 0 25px 25px 25px;
   font-size: 1rem;
   line-height: 2rem;
+ 
 }

@@ -6,7 +6,7 @@ import Home from '../components/Home'
 
 export default function HomePage() {
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
       <Header />
       <Home />
       <Footer />

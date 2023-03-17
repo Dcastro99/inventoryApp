@@ -5,7 +5,10 @@ import NotesMain from './NotesMain';
 import NotesSidebar from './NotesSidebar';
 
 
+
+
 export default function Notes() {
+
   const [notes, setNotes] = useState(
     localStorage.notes ? JSON.parse(localStorage.notes) : []
   );

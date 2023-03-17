@@ -6,11 +6,11 @@ import NotesModal from './notes/NotesModal';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 
-export default function Options(props) {
+export default function Options({ item }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log('props in Options', props)
+  console.log('props in Options', item)
 
   return (
     <Box sx={{
@@ -30,7 +30,7 @@ export default function Options(props) {
           <Grid >
             <Paper elevation={20} style={OptionStyle.paper}>
               <Grid align='center'>
-                <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>{props.item.productName} options</Typography>
+                <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>{item.productName} options</Typography>
               </Grid>
               <Box sx={{
                 // backgroundColor: 'pink',
