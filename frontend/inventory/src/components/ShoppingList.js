@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Box, Typography, Button } from '@mui/material'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-
+import ProductContext from '../context/productContext';
 import Dialog from '@mui/material/Dialog';
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
@@ -18,6 +18,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function ShoppingList() {
+  const { itemInShoppingCart } = useContext(ProductContext);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -67,13 +68,19 @@ export default function ShoppingList() {
           </Toolbar>
         </AppBar>
 
-        <List>
-          <ListItem button>
-            <ListItemText primary="Product" secondary="qty:" />
-          </ListItem>
-          <Divider />
+        {itemInShoppingCart.map((item) => {
 
-        </List>
+          return (
+            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+              <ListItem>
+                <ListItemText primary={item.productName} secondary={item.qty} />
+              </ListItem>
+              <Divider variant="inset" component="li" />
+            </List>
+          )
+
+        })
+        }
       </Dialog>
     </div >
   );

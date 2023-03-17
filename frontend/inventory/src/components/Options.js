@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Box, Typography, Modal, Button, Grid, Paper } from '@mui/material'
 import { OptionStyle } from '../style/OptionStyle';
+import ProductContext from '../context/productContext';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NotesModal from './notes/NotesModal';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -10,7 +11,20 @@ export default function Options({ item }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log('props in Options', item)
+
+  const { addItemToSHPLST } = useContext(ProductContext);
+  console.log('props in Options::', item);
+
+  const addItemHandler = (item) => {
+    const itemToAdd = item;
+    console.log('itemToAdd', itemToAdd);
+    addItemToSHPLST(
+      itemToAdd.productName,
+      itemToAdd.qty,
+      itemToAdd.uom,
+      itemToAdd.id
+    )
+  }
 
   return (
     <Box sx={{
@@ -52,7 +66,9 @@ export default function Options({ item }) {
                     color: 'black',
                   },
                   margin: 1
-                }}><AddShoppingCartIcon /></Button>
+                }}
+                  onClick={() => { addItemHandler(item) }}
+                ><AddShoppingCartIcon /></Button>
               </Box>
 
             </Paper>
