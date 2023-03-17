@@ -5,24 +5,28 @@ import ProductContext from '../context/productContext';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NotesModal from './notes/NotesModal';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-
+import Chance from 'chance';
+const chance = new Chance();
 
 export default function Options({ item }) {
   const [open, setOpen] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
 
   const { addItemToSHPLST } = useContext(ProductContext);
   console.log('props in Options::', item);
 
-  const addItemHandler = (item) => {
+  const addItemHandler = () => {
     const itemToAdd = item;
+    const id = chance.bb_pin();
     console.log('itemToAdd', itemToAdd);
     addItemToSHPLST(
       itemToAdd.productName,
       itemToAdd.qty,
       itemToAdd.uom,
-      itemToAdd.id
+      itemToAdd.id = id
     )
   }
 
@@ -67,7 +71,7 @@ export default function Options({ item }) {
                   },
                   margin: 1
                 }}
-                  onClick={() => { addItemHandler(item) }}
+                  onClick={() => { addItemHandler() }}
                 ><AddShoppingCartIcon /></Button>
               </Box>
 

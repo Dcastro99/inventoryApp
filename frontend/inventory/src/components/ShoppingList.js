@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { Box, Typography, Button } from '@mui/material'
+import React, { useContext, useEffect, useState } from 'react'
+import { Typography, Button } from '@mui/material'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ProductContext from '../context/productContext';
 import Dialog from '@mui/material/Dialog';
@@ -12,13 +12,16 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+import { Box } from '@mui/system';
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function ShoppingList() {
-  const { itemInShoppingCart } = useContext(ProductContext);
+  const { itemInShoppingCart, deleteItemInSHPLST } = useContext(ProductContext);
+  const [newItem, setNewItem] = useState('');
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -28,6 +31,10 @@ export default function ShoppingList() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    setNewItem(itemInShoppingCart)
+  }, [itemInShoppingCart])
 
   return (
     <div >
@@ -59,7 +66,7 @@ export default function ShoppingList() {
             >
               <CloseIcon />
             </IconButton>
-            <Typography sx={{ ml: 88, flex: 1 }} variant="h2" component="div">
+            <Typography sx={{ ml: 92, flex: 1 }} variant="h2" component="div">
               Shopping List
             </Typography>
             {/* <Button autoFocus color="inherit" onClick={handleClose}>
@@ -68,19 +75,21 @@ export default function ShoppingList() {
           </Toolbar>
         </AppBar>
 
-        {itemInShoppingCart.map((item) => {
+        {itemInShoppingCart.length > 0 ? (<>
+          {newItem.map((item) => {
+            return (
+              <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                <ListItem>
+                  <ListItemText primary={item.productName} secondary={item.qty} />
+                </ListItem>
+                <Button onClick={() => deleteItemInSHPLST(item.id)}>Delete</Button>
+                <Divider />
+              </List>
+            )
 
-          return (
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-              <ListItem>
-                <ListItemText primary={item.productName} secondary={item.qty} />
-              </ListItem>
-              <Divider variant="inset" component="li" />
-            </List>
-          )
-
-        })
-        }
+          })
+          }
+        </>) : (<Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}><Typography sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '140px', maxWidth: 360, fontSize: 20, fontWeight: 'bold', padding: 5, borderRadius: 5, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', backgroundColor: 'whitesmoke' }}>Your shopping list is empty</Typography></Box>)}
       </Dialog>
     </div >
   );
