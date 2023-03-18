@@ -41,7 +41,13 @@ export default function Products() {
       alignItems: 'center',
     }}>
       <Box  >
-        <Button sx={{ color: 'Tomato', backgroundColor: '#B8B8B8', marginTop: 5 }} onClick={handleOpen}>Add Product</Button>
+        <Button sx={{
+          color: 'Tomato', backgroundColor: '#B8B8B8', marginTop: 5, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', '&:hover': {
+            backgroundColor: 'white',
+            color: '#676767',
+            boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+          },
+        }} onClick={handleOpen}>Add Product</Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -76,7 +82,7 @@ export default function Products() {
                   </Select>
                   <Typography variant='h5' sx={ProductStyle.formtext}>Quantity</Typography>
                   <TextField label='Quantity' type='number' name='product_quantity' sx={ProductStyle.numberTextFiled} />
-                  <Button sx={ProductStyle.button} type='submit' variant='contained' color='primary' fullWidth >Add Product</Button>
+                  <Button sx={ProductStyle.button} type='submit' variant='contained' fullWidth >Add Product</Button>
                 </form>
 
               </Paper>
@@ -86,6 +92,6 @@ export default function Products() {
         </Modal>
 
       </Box>
-    </Box>
+    </Box >
   )
 }

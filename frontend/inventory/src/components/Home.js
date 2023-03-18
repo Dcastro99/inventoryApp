@@ -5,7 +5,7 @@ import BasicTable from './InventoryTable'
 
 
 
-export default function Home() {
+export default function Home({ addToCart }) {
 
 
   return (
@@ -17,7 +17,7 @@ export default function Home() {
       alignItems: 'center',
       marginBottom: 10,
     }}>
-      <BasicTable />
+      <BasicTable addToCart={addToCart} />
       <Products />
     </Box>
 

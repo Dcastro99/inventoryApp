@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Typography, Button } from '@mui/material'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import ProductContext from '../context/productContext';
 import Dialog from '@mui/material/Dialog';
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
@@ -19,11 +18,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ShoppingList() {
-  const { itemInShoppingCart, deleteItemInSHPLST } = useContext(ProductContext);
+export default function ShoppingList({ cartItems }) {
   const [newItem, setNewItem] = useState('');
   const [open, setOpen] = React.useState(false);
-
+  console.log('newItem in Cart!', newItem)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -32,9 +30,13 @@ export default function ShoppingList() {
     setOpen(false);
   };
 
+  const deleteItem = (id) => {
+    setNewItem(newItem.filter((x) => x.id !== id));
+  }
+
   useEffect(() => {
-    setNewItem(itemInShoppingCart)
-  }, [itemInShoppingCart])
+    setNewItem(cartItems)
+  }, [cartItems])
 
   return (
     <div >
@@ -56,7 +58,7 @@ export default function ShoppingList() {
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar sx={{ position: 'relative', backgroundColor: 'gray' }}>
+        <AppBar sx={{ position: 'relative', backgroundColor: 'gray', marginBottom: 10 }}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -75,16 +77,30 @@ export default function ShoppingList() {
           </Toolbar>
         </AppBar>
 
-        {itemInShoppingCart.length > 0 ? (<>
+        {newItem.length > 0 ? (<>
           {newItem.map((item) => {
             return (
-              <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                <ListItem>
-                  <ListItemText primary={item.productName} secondary={item.qty} />
-                </ListItem>
-                <Button onClick={() => deleteItemInSHPLST(item.id)}>Delete</Button>
-                <Divider />
-              </List>
+
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 360, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
+
+                  <Typography sx={{ fontWeight: 'bold', fontSize: 20 }}>{item.productName}</Typography>
+                  <Typography sx={{ color: 'lightGray' }}>{item.qty}</Typography>
+
+                  <Button sx={{
+                    backgroundColor: 'white',
+                    color: '#FF7F50',
+                    borderRadius: '10px',
+                    divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+                    '&:hover': {
+                      backgroundColor: 'smokeWhite',
+                      color: 'red',
+                    },
+                    margin: 1
+                  }} onClick={() => deleteItem(item.id)}>Delete</Button>
+                </Box>
+              </Box>
+
             )
 
           })
