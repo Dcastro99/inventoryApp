@@ -1,33 +1,43 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Typography, Modal, Button, Grid, Paper } from '@mui/material'
 import { OptionStyle } from '../style/OptionStyle';
-import ProductContext from '../context/productContext';
+// import ProductContext from '../context/productContext';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NotesModal from './notes/NotesModal';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Chance from 'chance';
 const chance = new Chance();
 
-export default function Options({ item }) {
+export default function Options({ item, addToCart }) {
   const [open, setOpen] = useState(false);
-
+  const [itemToAdd, setItemToAdd] = useState('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
 
-  const { addItemToSHPLST } = useContext(ProductContext);
+  // const { addItemToSHPLST } = useContext(ProductContext);
   console.log('props in Options::', item);
 
+  useEffect(() => {
+    setItemToAdd(item)
+  }, [item])
+
   const addItemHandler = () => {
-    const itemToAdd = item;
+    const newItem = itemToAdd;
     const id = chance.bb_pin();
-    console.log('itemToAdd', itemToAdd);
-    addItemToSHPLST(
-      itemToAdd.productName,
-      itemToAdd.qty,
-      itemToAdd.uom,
-      itemToAdd.id = id
+    console.log('itemToAdd', newItem);
+    addToCart(
+      newItem.productName,
+      newItem.qty,
+      newItem.uom,
+      newItem.id
     )
+    // addItemToSHPLST(
+    //   itemToAdd.productName,
+    //   itemToAdd.qty,
+    //   itemToAdd.uom,
+    //   itemToAdd.id = id
+    // )
   }
 
   return (

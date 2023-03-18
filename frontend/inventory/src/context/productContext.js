@@ -5,7 +5,6 @@ const ProductContext = createContext();
 
 export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
-  const [itemInShoppingCart, setItemInShoppingCart] = useState([]);
   console.log('products------->', products)
   const addProduct = (productName, uom, qty, id) => {
     // console.log('id', id)
@@ -46,30 +45,10 @@ export function ProductProvider({ children }) {
     setProducts(products.filter((x) => x.id !== id));
   }
 
-  const addItemToSHPLST = (productName, uom, qty, id) => {
-    console.log('product for shopping list', productName, uom, qty, id)
-    let item = itemInShoppingCart.find((item) => item.productName === productName);
-    if (item) { // if item exists, update qty
-      item.qty = qty;
-      item.productName = productName;
-      item.uom = uom;
-      item.id = id;
-      setItemInShoppingCart([...itemInShoppingCart]);
-    }
-    else {
-
-      setItemInShoppingCart((prevState) => [...prevState, { productName, uom, qty, id }]);
-    }
-  }
-
-  const deleteItemInSHPLST = (id) => {
-    console.log('id----------->', id)
-    setProducts(itemInShoppingCart.filter((x) => x.id !== id));
-  }
 
 
   return (
-    <ProductContext.Provider value={{ products, itemInShoppingCart, addProduct, updateProduct, deleteProduct, addItemToSHPLST, deleteItemInSHPLST }}>
+    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct }}>
       {children}
     </ProductContext.Provider>
   )
