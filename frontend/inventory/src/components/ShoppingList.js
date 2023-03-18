@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Typography, Button } from '@mui/material'
+import { Typography, Button, Radio, RadioGroup, FormControl, FormControlLabel, FormLabel } from '@mui/material'
+import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
+import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -20,7 +18,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function ShoppingList({ cartItems }) {
   const [newItem, setNewItem] = useState('');
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState(false);
   console.log('newItem in Cart!', newItem)
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,6 +32,16 @@ export default function ShoppingList({ cartItems }) {
   const deleteItem = (id) => {
     setNewItem(newItem.filter((x) => x.id !== id));
   }
+
+  const handleCheck = (id) => {
+    console.log('id---------------', id)
+
+    let item = newItem.find((item) => item.id === id);
+    console.log('item---------------', item)
+    if (item) { // if item exists, update qty
+      setChecked(!checked);
+    }
+  };
 
   useEffect(() => {
     setNewItem(cartItems)
@@ -82,11 +91,11 @@ export default function ShoppingList({ cartItems }) {
             return (
 
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1 }}>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 360, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
 
                   <Typography sx={{ fontWeight: 'bold', fontSize: 20 }}>{item.productName}</Typography>
                   <Typography sx={{ color: 'lightGray' }}>{item.qty}</Typography>
-
+                  <Box sx={{ color: 'black', }}>{checked ? (<CheckBoxOutlineBlankOutlinedIcon onClick={() => handleCheck(item.id)} />) : (<CheckBoxOutlinedIcon onClick={() => handleCheck(item.id)} />)}</Box>
                   <Button sx={{
                     backgroundColor: 'white',
                     color: '#FF7F50',
@@ -98,6 +107,7 @@ export default function ShoppingList({ cartItems }) {
                     },
                     margin: 1
                   }} onClick={() => deleteItem(item.id)}>Delete</Button>
+
                 </Box>
               </Box>
 
