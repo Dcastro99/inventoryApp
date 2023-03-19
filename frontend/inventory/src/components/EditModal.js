@@ -13,11 +13,8 @@ export default function EditModal({ item }) {
   const [newName, setNewName] = useState('');
   const [newQty, setNewQty] = useState('');
   const [newUnit, setNewUnit] = useState('');
-  // const { addProduct } = useContext(ProductContext);
   const { updateProduct } = useContext(ProductContext);
-  // console.log('item in EditModal', props.item)
-  //add product handler
-  // console.log('newName', newName)
+
   const updateProductHandler = (e) => {
     let id = item.id
     e.preventDefault();
