@@ -7,7 +7,7 @@ export default function Header({ cartItems }) {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 110 }}>
       <Box sx={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 110 }}>
-        <Typography sx={{ marginLeft: 10 }} variant="h3">Welcome to MyPantry</Typography>
+        <Typography sx={{ marginLeft: 15, fontFamily: 'Dancing Script', fontSize: 70 }} variant="h3">Welcome to MyPantry</Typography>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 4 }}>
         <Button sx={{
