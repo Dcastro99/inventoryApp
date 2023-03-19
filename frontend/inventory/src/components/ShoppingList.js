@@ -19,8 +19,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function ShoppingList({ cartItems }) {
   const [newItem, setNewItem] = useState('');
   const [open, setOpen] = useState(false);
-  const [checked, setChecked] = useState(false);
-  console.log('newItem in Cart!', newItem)
+  // console.log('newItem in Cart!', newItem)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -34,14 +33,16 @@ export default function ShoppingList({ cartItems }) {
   }
 
   const handleCheck = (id) => {
-    console.log('id---------------', id)
-
-    let item = newItem.find((item) => item.id === id);
-    console.log('item---------------', item)
-    if (item) { // if item exists, update qty
-      setChecked(!checked);
-    }
+    // console.log('id---------------', id)
+    const items = newItem.map(x => {
+      if (x.id === id) {
+        x.checked = !x.checked
+      }
+      return x
+    });
+    setNewItem(items)
   };
+
 
   useEffect(() => {
     setNewItem(cartItems)
@@ -85,17 +86,19 @@ export default function ShoppingList({ cartItems }) {
             </Button> */}
           </Toolbar>
         </AppBar>
+        {/* {item.checked = false ? (<CheckBoxOutlineBlankOutlinedIcon />) : (<CheckBoxOutlinedIcon />)} */}
 
         {newItem.length > 0 ? (<>
           {newItem.map((item) => {
             return (
 
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1 }}>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
 
-                  <Typography sx={{ fontWeight: 'bold', fontSize: 20 }}>{item.productName}</Typography>
+              < Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
+                  {console.log('item.checked', item.checked)}
+                  <Typography sx={{ fontWeight: 'bold', fontSize: 20 }}>{item.checked === true ? <del>{item.productName}</del> : item.productName}</Typography>
                   <Typography sx={{ color: 'lightGray' }}>{item.qty}</Typography>
-                  <Box sx={{ color: 'black', }}>{checked ? (<CheckBoxOutlineBlankOutlinedIcon onClick={() => handleCheck(item.id)} />) : (<CheckBoxOutlinedIcon onClick={() => handleCheck(item.id)} />)}</Box>
+                  <Box sx={{ color: 'black', }} onClick={() => handleCheck(item.id)}>{item.checked === false ? (<CheckBoxOutlineBlankOutlinedIcon />) : (<CheckBoxOutlinedIcon />)}</Box>
                   <Button sx={{
                     backgroundColor: 'white',
                     color: '#FF7F50',

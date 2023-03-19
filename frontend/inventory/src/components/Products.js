@@ -22,11 +22,13 @@ export default function Products() {
     e.preventDefault();
     const formData = e.target;
     const id = chance.bb_pin();
+    const checked = false;
     addProduct(
       formData.product_name.value,
       formData.unit_of_measure.value,
       formData.product_quantity.value,
-      id
+      id,
+      checked
     )
     setOpen(false);
   }

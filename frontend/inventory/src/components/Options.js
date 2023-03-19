@@ -5,8 +5,7 @@ import { OptionStyle } from '../style/OptionStyle';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NotesModal from './notes/NotesModal';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import Chance from 'chance';
-const chance = new Chance();
+
 
 export default function Options({ item, addToCart }) {
   const [open, setOpen] = useState(false);
@@ -24,13 +23,13 @@ export default function Options({ item, addToCart }) {
 
   const addItemHandler = () => {
     const newItem = itemToAdd;
-    const id = chance.bb_pin();
     console.log('itemToAdd', newItem);
     addToCart(
       newItem.productName,
       newItem.qty,
       newItem.uom,
-      newItem.id
+      newItem.id,
+      newItem.checked
     )
     // addItemToSHPLST(
     //   itemToAdd.productName,
