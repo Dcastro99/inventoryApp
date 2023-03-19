@@ -5,7 +5,9 @@ const ProductContext = createContext();
 
 export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
-  console.log('products------->', products)
+
+  //----------AD PRODUCT----------//
+
   const addProduct = (productName, uom, qty, id, checked) => {
     // console.log('id', id)
     let item = products.find((item) => item.productName === productName);
@@ -26,11 +28,11 @@ export function ProductProvider({ children }) {
     }
   }
 
+  //----------UPDATE PRODUCT----------//
+
   const updateProduct = (productName, uom, qty, id, checked) => {
     let item = products.find((item) => item.id === id);
-    // console.log('item>>>>>>>>>>', item)
     if (item) { // if item exists, update qty
-
       item.qty = qty;
       item.productName = productName;
       item.uom = uom;
@@ -42,6 +44,8 @@ export function ProductProvider({ children }) {
       setProducts((prevState) => [...prevState, { productName, uom, qty, id, checked }]);
     }
   }
+
+  //----------DELETE PRODUCT----------//
 
   const deleteProduct = (id) => {
     setProducts(products.filter((x) => x.id !== id));

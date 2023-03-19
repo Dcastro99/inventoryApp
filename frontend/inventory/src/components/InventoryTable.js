@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Options from './Options';
 
 
-export default function BasicTable({ addToCart }) {
+export default function BasicTable({ addToCart, handleAlert }) {
   const { products } = useContext(ProductContext);
   const [newProducts, setNewProducts] = useState('');
   const { deleteProduct } = useContext(ProductContext);
@@ -74,7 +74,7 @@ export default function BasicTable({ addToCart }) {
 
                   </TableCell>
                   <TableCell>
-                    <Options item={item} addToCart={addToCart} />
+                    <Options item={item} addToCart={addToCart} handleAlert={handleAlert} />
                   </TableCell>
                 </TableRow>
               </TableBody>

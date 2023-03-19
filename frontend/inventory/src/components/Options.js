@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, Modal, Button, Grid, Paper } from '@mui/material'
+import { Box, Typography, Modal, Button, Grid, Paper, Stack, Alert } from '@mui/material'
 import { OptionStyle } from '../style/OptionStyle';
-// import ProductContext from '../context/productContext';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NotesModal from './notes/NotesModal';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
+export function Alerts() {
+  return (
+    <Stack sx={{ width: '100%' }} spacing={2}>
+      <Alert severity="success">Item added to shopping list!</Alert>
+    </Stack>
+  )
+};
 
-export default function Options({ item, addToCart }) {
+
+export default function Options({ item, addToCart, handleAlert }) {
   const [open, setOpen] = useState(false);
   const [itemToAdd, setItemToAdd] = useState('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
 
   // const { addItemToSHPLST } = useContext(ProductContext);
   console.log('props in Options::', item);
@@ -20,6 +26,8 @@ export default function Options({ item, addToCart }) {
   useEffect(() => {
     setItemToAdd(item)
   }, [item])
+
+
 
   const addItemHandler = () => {
     const newItem = itemToAdd;
@@ -31,12 +39,8 @@ export default function Options({ item, addToCart }) {
       newItem.id,
       newItem.checked
     )
-    // addItemToSHPLST(
-    //   itemToAdd.productName,
-    //   itemToAdd.qty,
-    //   itemToAdd.uom,
-    //   itemToAdd.id = id
-    // )
+    setOpen(false);
+    handleAlert(<Alerts />);
   }
 
   return (
