@@ -6,7 +6,7 @@ const ProductContext = createContext();
 export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
   console.log('products------->', products)
-  const addProduct = (productName, uom, qty, id) => {
+  const addProduct = (productName, uom, qty, id, checked) => {
     // console.log('id', id)
     let item = products.find((item) => item.productName === productName);
     if (item) { // if item exists, update qty
@@ -17,15 +17,16 @@ export function ProductProvider({ children }) {
       item.productName = productName;
       item.uom = uom;
       item.id = id;
+      item.checked = checked;
       setProducts([...products]);
     }
     else {
 
-      setProducts((prevState) => [...prevState, { productName, uom, qty, id }]);
+      setProducts((prevState) => [...prevState, { productName, uom, qty, id, checked }]);
     }
   }
 
-  const updateProduct = (productName, uom, qty, id) => {
+  const updateProduct = (productName, uom, qty, id, checked) => {
     let item = products.find((item) => item.id === id);
     // console.log('item>>>>>>>>>>', item)
     if (item) { // if item exists, update qty
@@ -34,10 +35,11 @@ export function ProductProvider({ children }) {
       item.productName = productName;
       item.uom = uom;
       item.id = id;
+      item.checked = checked;
       setProducts([...products]);
     }
     else {
-      setProducts((prevState) => [...prevState, { productName, uom, qty, id }]);
+      setProducts((prevState) => [...prevState, { productName, uom, qty, id, checked }]);
     }
   }
 

@@ -9,19 +9,20 @@ const chance = new Chance();
 export default function HomePage() {
   const [cartItems, setCartItems] = useState([]);
   console.log('cartItems::::', cartItems);
-  const addToCart = (productName, uom, qty, id) => {
+  const addToCart = (productName, uom, qty, id, checked) => {
     const newId = chance.bb_pin();
     let item = cartItems.find((item) => item.productName === productName);
     if (item) {
       item.qty = qty;
       item.productName = productName;
       item.uom = uom;
-      item.id = newId
+      item.id = newId;
+      item.checked = checked;
       setCartItems([...cartItems]);
     }
     else {
       id = newId
-      setCartItems((prevState) => [...prevState, { productName, uom, qty, id }])
+      setCartItems((prevState) => [...prevState, { productName, uom, qty, id, checked }])
     }
   }
   return (
