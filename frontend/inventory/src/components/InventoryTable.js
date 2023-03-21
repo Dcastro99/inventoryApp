@@ -81,7 +81,7 @@ export default function BasicTable({ addToCart, handleAlert }) {
             ))}
           </Table>
         </TableContainer>)
-        : (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'LightSlateGray', color: 'white', fontSize: 30, marginTop: 5, width: 400, height: 200 }}>Nothing in your Pantry!</Box>)}
+        : (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'LightSlateGray', color: 'white', fontSize: 30, marginTop: 5, width: 400, height: 200, borderRadius: 2 }}>Nothing in your Pantry!</Box>)}
     </Box>
   );
 }

@@ -95,7 +95,7 @@ export default function EditModal({ item }) {
                   </Select>
                   <Typography variant='h5' sx={ProductStyle.formtext}>Quantity</Typography>
                   <TextField label="Qty" type='number' name='product_quantity' value={newQty} onChange={(e) => setNewQty(e.target.value)} sx={ProductStyle.numberTextFiled} />
-                  <Button sx={ProductStyle.button} type='submit' variant='contained' color='primary' fullWidth >Add Product</Button>
+                  <Button sx={ProductStyle.button} type='submit' variant='contained' color='primary' fullWidth >Update</Button>
                 </form>
 
               </Paper>

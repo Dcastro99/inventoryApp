@@ -8,7 +8,7 @@ export function ProductProvider({ children }) {
 
   //----------AD PRODUCT----------//
 
-  const addProduct = (productName, uom, qty, id, checked) => {
+  const addProduct = (productName, uom, qty, id) => {
     // console.log('id', id)
     let item = products.find((item) => item.productName === productName);
     if (item) { // if item exists, update qty
@@ -19,29 +19,47 @@ export function ProductProvider({ children }) {
       item.productName = productName;
       item.uom = uom;
       item.id = id;
-      item.checked = checked;
+      // item.checked = checked;
       setProducts([...products]);
     }
     else {
 
-      setProducts((prevState) => [...prevState, { productName, uom, qty, id, checked }]);
+      setProducts((prevState) => [...prevState, { productName, uom, qty, id }]);
+    }
+  }
+
+  //----------decrement PRODUCT----------//
+
+  const decrementProduct = (productName, uom, qty, id, newQty) => {
+    console.log('decrement', productName, uom, qty, id, newQty)
+    let item = products.find((item) => item.productName === productName);
+    if (item) { // if item exists, update qty
+      item.qty = qty - newQty;
+      item.productName = productName;
+      item.uom = uom;
+      item.id = id;
+      // item.checked = checked;
+      setProducts([...products]);
+    }
+    else {
+      setProducts((prevState) => [...prevState, { productName, uom, qty, id }]);
     }
   }
 
   //----------UPDATE PRODUCT----------//
 
-  const updateProduct = (productName, uom, qty, id, checked) => {
+  const updateProduct = (productName, uom, qty, id) => {
     let item = products.find((item) => item.id === id);
     if (item) { // if item exists, update qty
       item.qty = qty;
       item.productName = productName;
       item.uom = uom;
       item.id = id;
-      item.checked = checked;
+      // item.checked = checked;
       setProducts([...products]);
     }
     else {
-      setProducts((prevState) => [...prevState, { productName, uom, qty, id, checked }]);
+      setProducts((prevState) => [...prevState, { productName, uom, qty, id }]);
     }
   }
 
@@ -51,10 +69,28 @@ export function ProductProvider({ children }) {
     setProducts(products.filter((x) => x.id !== id));
   }
 
+  //----------RESET PRODUCT----------//
+
+  const resetProduct = (productName, uom, qty, id) => {
+    console.log('RESET------>', productName, uom, qty, id)
+    let item = products.find((item) => item.productName === productName);
+    if (item) { // if item exists, update qty
+      item.productName = productName;
+      item.uom = uom;
+      item.id = id;
+      // item.checked = false;
+      setProducts([...products]);
+    }
+    else {
+      setProducts((prevState) => [...prevState, { productName, uom, qty, id }]);
+    }
+    setProducts([]);
+  }
+
 
 
   return (
-    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct }}>
+    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, decrementProduct, resetProduct }}>
       {children}
     </ProductContext.Provider>
   )
