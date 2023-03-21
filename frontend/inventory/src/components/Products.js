@@ -14,7 +14,6 @@ export default function Products({ alert }) {
   const { addProduct } = useContext(ProductContext);
 
 
-  console.log('alert::::', alert);
 
   //------------- ADD PRODUCT HANDLER --------------//
 
