@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { createContext, useState } from 'react';
 
 
@@ -9,17 +10,15 @@ export function ProductProvider({ children }) {
   //----------AD PRODUCT----------//
 
   const addProduct = (productName, uom, qty, id) => {
-    // console.log('id', id)
+    console.log('add me sucka!!', productName, uom, qty, id)
     let item = products.find((item) => item.productName === productName);
     if (item) { // if item exists, update qty
-      let newQty = item.qty;
-      let num2 = parseInt(qty);
-      let num1 = parseInt(newQty);
-      item.qty = num1 + num2;
+      let sum = parseInt(item.qty) + parseInt(qty)
+      item.qty = sum;
       item.productName = productName;
       item.uom = uom;
       item.id = id;
-      // item.checked = checked;
+
       setProducts([...products]);
     }
     else {
@@ -71,26 +70,29 @@ export function ProductProvider({ children }) {
 
   //----------RESET PRODUCT----------//
 
-  const resetProduct = (productName, uom, qty, id) => {
-    console.log('RESET------>', productName, uom, qty, id)
+  //----------AD PRODUCT----------//
+
+  const addCartProduct = (productName, uom, qty, id) => {
+    console.log('add me sucka!!', productName, uom, qty, id)
     let item = products.find((item) => item.productName === productName);
     if (item) { // if item exists, update qty
+      item.qty = qty;
       item.productName = productName;
       item.uom = uom;
       item.id = id;
-      // item.checked = false;
+
       setProducts([...products]);
     }
     else {
+
       setProducts((prevState) => [...prevState, { productName, uom, qty, id }]);
     }
-    setProducts([]);
   }
 
 
 
   return (
-    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, decrementProduct, resetProduct }}>
+    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, decrementProduct, addCartProduct }}>
       {children}
     </ProductContext.Provider>
   )
