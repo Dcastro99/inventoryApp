@@ -22,7 +22,7 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
   const [open, setOpen] = useState(false);
   const [newQty, setNewQty] = useState();
   const [isChecked, setIsChecked] = useState('');
-  const { addProduct, decrementProduct, } = useContext(ProductContext);
+  const { addCartProduct, decrementProduct, } = useContext(ProductContext);
   // console.log('newQty!', newQty)
   console.log('newItem!', newItem)
   console.log('isChecked!', isChecked)
@@ -57,10 +57,11 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
       if (x.checked === false
       ) {
         x.checked = !x.checked
-        addProduct(
+        let sum = parseInt(x.qty) + parseInt(newQty)
+        addCartProduct(
           item.productName,
           item.uom,
-          item.qty = newQty,
+          item.qty = sum,
           item.id,
           item.checked
 
@@ -69,6 +70,7 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
       }
       else if (x.checked === true) {
         x.checked = !x.checked
+        // let sum = parseInt(x.qty) - parseInt(newQty)
         decrementProduct(
           item.productName,
           item.uom,
@@ -82,6 +84,7 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
 
       return x
     });
+    console.log('items:::---->>>', items)
     setNewItem(items)
 
     // addProduct(items)
