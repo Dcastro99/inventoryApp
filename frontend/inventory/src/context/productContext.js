@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { createContext, useState } from 'react';
 
 
@@ -73,7 +72,7 @@ export function ProductProvider({ children }) {
   //----------AD PRODUCT----------//
 
   const addCartProduct = (productName, uom, qty, id) => {
-    console.log('add me sucka!!', productName, uom, qty, id)
+    console.log('cart add me sucka!!', productName, uom, qty, id)
     let item = products.find((item) => item.productName === productName);
     if (item) { // if item exists, update qty
       item.qty = qty;

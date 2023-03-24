@@ -21,11 +21,11 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
   const [newItem, setNewItem] = useState('');
   const [open, setOpen] = useState(false);
   const [newQty, setNewQty] = useState();
-  const [isChecked, setIsChecked] = useState('');
+  // const [isChecked, setIsChecked] = useState('');
   const { addCartProduct, decrementProduct, } = useContext(ProductContext);
   // console.log('newQty!', newQty)
   console.log('newItem!', newItem)
-  console.log('isChecked!', isChecked)
+  // console.log('isChecked!', isChecked)
   console.log('cartItems!', cartItems)
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,7 +43,7 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
       }
       return item;
     })
-    setIsChecked(false)
+    // setIsChecked(false)
     // resetProduct(cartItem)
     setNewItem(newItems)
     deleteItem(cartItem.newId);
@@ -52,43 +52,39 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
   }
 
   const handleCheck = (item) => {
-    console.log('add item', item)
+    console.log(' item=====>', item)
     const items = newItem.map(x => {
-      if (x.checked === false
-      ) {
+      if (x.newId === item.newId) {
         x.checked = !x.checked
-        let sum = parseInt(x.qty) + parseInt(newQty)
-        addCartProduct(
-          item.productName,
-          item.uom,
-          item.qty = sum,
-          item.id,
-          item.checked
 
-        )
-        setIsChecked(true)
-      }
-      else if (x.checked === true) {
-        x.checked = !x.checked
-        // let sum = parseInt(x.qty) - parseInt(newQty)
-        decrementProduct(
-          item.productName,
-          item.uom,
-          item.qty,
-          item.id,
-          item.checked,
-          item.newQty = newQty
-        )
-        setIsChecked(false)
-      }
+        if (x.checked) {
+          let sum = parseInt(x.qty) + parseInt(newQty)
+          addCartProduct(
+            item.productName,
+            item.uom,
+            item.qty = sum,
+            item.id,
+            item.checked
+          )
+        } else if (
+          !x.checked
+        ) {
+          decrementProduct(
+            item.productName,
+            item.uom,
+            item.qty = newQty,
+            item.id,
+            item.checked
+          )
+        }
 
-      return x
+      }
+      return x;
     });
-    console.log('items:::---->>>', items)
-    setNewItem(items)
+    setNewItem(items);
 
-    // addProduct(items)
-  };
+  }
+
 
   const handleClearAll = () => {
     clearCart();
@@ -144,13 +140,14 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
                 < Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1 }}>
                   <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
                     {console.log('item.checked', item.checked)}
-                    <Typography sx={{ fontWeight: 'bold', fontSize: 20 }}>{isChecked === true ? <del>{item.productName}</del> : item.productName}</Typography>
+                    <Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>{item.checked === true ? <del>{item.productName}</del> : item.productName}</Typography>
                     {console.log('itemzzzz', item)}
                     {/* <Typography sx={{ color: 'lightGray' }}>{item.qty}</Typography> */}
                     <TextField label="Qty" type='number' name='product_quantity' required onChange={(e) => setNewQty(e.target.value)} sx={{
                       width: '80px',
                     }} />
-                    <Box sx={{ color: 'black', }} onClick={() => handleCheck(item)}>{item.checked === false ? (<CheckBoxOutlineBlankOutlinedIcon />) : (<CheckBoxOutlinedIcon />)}</Box>
+                    {item.checked === false ? (<CheckBoxOutlineBlankOutlinedIcon onClick={() => handleCheck(item)} />) : (<CheckBoxOutlinedIcon onClick={() => handleCheck(item)} />)}
+
                     <Button sx={{
                       backgroundColor: 'white',
                       color: '#FF7F50',

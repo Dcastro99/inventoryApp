@@ -31,14 +31,14 @@ export default function Options({ item, addToCart, handleAlert }) {
 
   const addItemHandler = () => {
     const newItem = itemToAdd;
-    const checked = false;
+    // const checked = false;
     console.log('itemToAdd', newItem);
     addToCart(
       newItem.productName,
       newItem.uom,
       newItem.qty,
       newItem.id,
-      checked
+      // checked
 
     )
     setOpen(false);
