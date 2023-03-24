@@ -9,9 +9,10 @@ const chance = new Chance();
 export default function HomePage() {
   const [cartItems, setCartItems] = useState([]);
   console.log('cartItems::::', cartItems);
-  const addToCart = (productName, uom, qty, id, checked) => {
-    console.log('before adding to cart', productName, uom, qty, id, checked)
+  const addToCart = (productName, uom, qty, id) => {
+    console.log('before adding to cart', productName, uom, qty, id)
     const newId = chance.bb_pin();
+    const checked = false;
     let item = cartItems.find((item) => item.productName === productName);
     if (item) {
       item.productName = productName;
