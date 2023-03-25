@@ -17,6 +17,7 @@ export default function HomePage() {
     if (item) {
       item.productName = productName;
       item.uom = uom;
+
       item.qty = qty;
       item.id = id
       item.checked = checked;
