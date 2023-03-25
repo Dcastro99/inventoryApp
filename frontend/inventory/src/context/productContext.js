@@ -67,8 +67,6 @@ export function ProductProvider({ children }) {
     setProducts(products.filter((x) => x.id !== id));
   }
 
-  //----------RESET PRODUCT----------//
-
   //----------AD PRODUCT----------//
 
   const addCartProduct = (productName, uom, qty, id) => {
