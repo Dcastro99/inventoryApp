@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Box } from '@mui/material'
 import Products from './Products'
-import BasicTable from './InventoryTable'
+import InventoryTable from './InventoryTable'
 
 
 
@@ -28,7 +28,7 @@ export default function Home({ addToCart }) {
       alignItems: 'center',
       marginBottom: 10,
     }}>
-      <BasicTable addToCart={addToCart} handleAlert={handleAlert} />
+      <InventoryTable addToCart={addToCart} handleAlert={handleAlert} />
       <Products alert={alert} />
     </Box>
 

@@ -25,7 +25,6 @@ export default function Products({ alert }) {
     addProduct(
       formData.product_name.value,
       formData.unit_of_measure.value,
-      // formData.product_quantity.value,
       formData.product_quantity.value,
       id,
       checked
@@ -71,7 +70,6 @@ export default function Products({ alert }) {
                     <InputLabel id="demo-simple-select-helper-label" >Unit of Measure</InputLabel>
                     <Select
                       sx={{ width: 150 }}
-
                       name='unit_of_measure'
                       label="Unit of Measure"
                     >

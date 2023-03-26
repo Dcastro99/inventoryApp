@@ -73,17 +73,12 @@ export default function HomePage() {
     setCartItems([]);
   }
 
-  const deleteItem = (id) => {
-
-    setCartItems(cartItems.filter((x) => x.cartID !== id.id));
-  }
 
   return (
     <Box sx={{ width: '100%' }}>
       <Header
         cartItems={cartItems}
         clearCart={clearCart}
-        deleteItem={deleteItem}
         updateCart={updateCart}
         decrementCart={decrementCart}
       />

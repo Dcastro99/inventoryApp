@@ -17,12 +17,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ShoppingList({ cartItems, clearCart, deleteItem, updateCart, decrementCart }) {
+export default function ShoppingList({ cartItems, clearCart, updateCart, decrementCart }) {
   const [newItem, setNewItem] = useState('');
   const [open, setOpen] = useState(false);
   const [newQty, setNewQty] = useState(0);
-  const { updateProduct } = useContext(ProductContext);
+  const { updateProduct, products } = useContext(ProductContext);
   let itemsAlert;
+  // let decrementSum;
+  // let deleteAll;
+
+  console.log('newItem in Cart', newItem)
+  console.log('products in inventory', products)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -47,6 +52,10 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem, updateC
 
         if (x.checked) {
           let sum = parseInt(x.qty) + parseInt(newQty);
+          // decrementSum = parseInt(x.qty) - parseInt(x.prevQty);
+          console.log('x.prevQty', x.prevQty)
+          console.log('newQty', newQty)
+          console.log('Newqty+', sum)
           updateCart(
             x.productName,
             x.uom,
@@ -67,6 +76,9 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem, updateC
           !x.checked
         ) {
           let sum = parseInt(x.qty) - parseInt(x.prevQty);
+          console.log('x.prevQty', x.prevQty)
+          console.log('newQty', newQty)
+          console.log('Newqty+', sum)
           setNewQty(x.prevQty);
 
           decrementCart(
@@ -99,8 +111,41 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem, updateC
 
 
   const handleClearAll = () => {
+    // deleteAll = newItem.map((x) => {
+    //   let item = products.map((product) => {
+    //     if (x.id === product.id) {
+
+
+    //       decrementCart(
+    //         x.productName,
+    //         x.uom,
+    //         x.prevQty = decrementSum,
+    //         x.qty = decrementSum,
+    //         x.id,
+    //         x.newId,
+    //         x.checked
+    //       )
+
+    //       updateProduct(
+    //         x.productName,
+    //         x.uom,
+    //         x.qty = decrementSum,
+    //         x.id,
+    //       );
+
+    //     }
+    //     return x;
+    //   })
+
+
+    // });
+
+
     clearCart();
   }
+
+
+
 
 
   useEffect(() => {
@@ -164,18 +209,19 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem, updateC
                         width: '80px',
                       }} />)}
                     {item.checked === false ? (<CheckBoxOutlineBlankOutlinedIcon onClick={() => handleCheck(item)} />) : (<CheckBoxOutlinedIcon onClick={() => handleCheck(item)} />)}
-
-                    <Button sx={{
-                      backgroundColor: 'white',
-                      color: '#FF7F50',
-                      borderRadius: '10px',
-                      divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                      '&:hover': {
-                        backgroundColor: 'smokeWhite',
-                        color: 'red',
-                      },
-                      margin: 1
-                    }} onClick={() => deleteHandler(item)}>Delete</Button>
+                    <div>
+                      <Button sx={{
+                        backgroundColor: 'white',
+                        color: '#FF7F50',
+                        borderRadius: '10px',
+                        divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+                        '&:hover': {
+                          backgroundColor: 'smokeWhite',
+                          color: 'red',
+                        },
+                        margin: 1
+                      }} onClick={() => deleteHandler(item)}>Delete</Button>
+                    </div>
                   </Box>
                   <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 175, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 4, borderRadius: 2, marginLeft: 5 }}>
                     Current Qty:
