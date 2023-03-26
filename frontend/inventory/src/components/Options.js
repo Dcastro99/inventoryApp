@@ -20,8 +20,6 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // const { addItemToSHPLST } = useContext(ProductContext);
-  // console.log('props in Options::', item);
 
   useEffect(() => {
     setItemToAdd(item)
@@ -31,17 +29,12 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
 
   const addItemHandler = () => {
     const newItem = itemToAdd;
-    // console.log('newItem??????????????', newItem);
-    // const checked = false;
-    // console.log('itemToAdd', newItem);
+
     addToCart(
       newItem.productName,
       newItem.uom,
-      // newItem.prevQty,
       newItem.qty,
       newItem.id,
-      // checked
-
     )
     setOpen(false);
     handleAlert(<Alerts />);

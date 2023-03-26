@@ -34,7 +34,6 @@ export default function HomePage() {
   }
 
   const updateCart = (productName, uom, prevQty, qty, id, newId, checked) => {
-    console.log('updateCart', productName, uom, prevQty, qty, id, newId, checked)
     let item = cartItems.find((item) => item.newId === newId);
     if (item) { // if item exists, update qty
       let sum = parseInt(qty) - parseInt(prevQty)
@@ -53,7 +52,6 @@ export default function HomePage() {
   }
 
   const decrementCart = (productName, uom, prevQty, qty, id, newId, checked) => {
-    console.log('decrementCart', productName, uom, prevQty, qty, id, newId, checked)
     let item = cartItems.find((item) => item.newId === newId);
     if (item) { // if item exists, update qty
 

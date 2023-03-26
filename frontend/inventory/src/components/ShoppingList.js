@@ -22,7 +22,7 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem, updateC
   const [open, setOpen] = useState(false);
   const [newQty, setNewQty] = useState(0);
   const { updateProduct } = useContext(ProductContext);
-  console.log('cartItems}}}}}}}}}}', cartItems)
+  let itemsAlert;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -32,38 +32,20 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem, updateC
   };
 
   const deleteHandler = (cartItem) => {
-    console.log('delete item', cartItem)
-    let newItems = newItem.filter(item => {
-      if (item.productName === cartItem.productName) {
-        item.checked = false;
-      }
-      return item;
-    })
-    setNewItem(newItems)
-    deleteItem(cartItem.newId);
-    setNewQty('');
+    setNewItem(newItem.filter((x) => x.newId !== cartItem.newId))
   }
 
   const handleQty = (e) => {
     e.preventDefault();
-    console.log('e.target', e.target.value)
-
     setNewQty(e.target.value)
-
   }
 
-
   const handleCheck = (item) => {
-    console.log(' item=====>', item)
     const items = newItem.map(x => {
       if (x.newId === item.newId) {
         x.checked = !x.checked
 
         if (x.checked) {
-          console.log('item passing in addCartProduct!', item)
-          console.log('item.qty', x.qty)
-          console.log('item.prevQty', x.prevQty)
-          console.log('newQTY', newQty)
           let sum = parseInt(x.qty) + parseInt(newQty);
           updateCart(
             x.productName,
@@ -84,12 +66,7 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem, updateC
         } else if (
           !x.checked
         ) {
-          console.log('item passing in decrement!', item)
-          console.log('item.qty', x.qty)
-          console.log('item.prevQty', x.prevQty)
-          console.log('newQTY', newQty)
           let sum = parseInt(x.qty) - parseInt(x.prevQty);
-          console.log('sum::::::::::::', sum)
           setNewQty(x.prevQty);
 
           decrementCart(
@@ -168,6 +145,7 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem, updateC
           </Toolbar>
         </AppBar>
 
+
         {newItem.length > 0 ? (<>
           {newItem.map((item) => {
             return (
@@ -179,9 +157,12 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem, updateC
 
                     {/* {console.log('itemzzzz', item)} */}
                     {/* <Typography sx={{ color: 'lightGray' }}>{item.qty}</Typography> */}
-                    <TextField label="Qty" type='number' name='product_quantity' required onChange={(e) => handleQty(e)} sx={{
-                      width: '80px',
-                    }} />
+                    {item.checked === true ?
+                      (<TextField label="unselect" type='number' name='product_quantity' disabled error required onChange={(e) => handleQty(e)} sx={{
+                        width: '80px',
+                      }} />) : (<TextField label="Qty" type='number' name='product_quantity' required onChange={(e) => handleQty(e)} sx={{
+                        width: '80px',
+                      }} />)}
                     {item.checked === false ? (<CheckBoxOutlineBlankOutlinedIcon onClick={() => handleCheck(item)} />) : (<CheckBoxOutlinedIcon onClick={() => handleCheck(item)} />)}
 
                     <Button sx={{
@@ -221,6 +202,7 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem, updateC
           }} onClick={handleClearAll}>Clear All</Button>
         </Box>
       </Dialog>
+      {itemsAlert}
     </div >
   );
 }

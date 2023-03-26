@@ -46,7 +46,6 @@ export default function BasicTable({ addToCart, handleAlert }) {
                   key={item.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  {console.log('PRODUCT', item)}
                   <TableCell component="th" scope="row">
                     {item.productName}
                   </TableCell>
