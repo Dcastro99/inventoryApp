@@ -3,7 +3,7 @@ import { Box, Typography, Button } from '@mui/material'
 import ShoppingList from './ShoppingList'
 
 
-export default function Header({ cartItems, clearCart, deleteItem }) {
+export default function Header({ cartItems, clearCart, deleteItem, updateCart, decrementCart }) {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 110 }}>
       <Box sx={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 110 }}>
@@ -20,7 +20,14 @@ export default function Header({ cartItems, clearCart, deleteItem }) {
             color: 'black',
           }
 
-        }} ><ShoppingList cartItems={cartItems} clearCart={clearCart} deleteItem={deleteItem} /></Button>
+        }} ><ShoppingList
+            cartItems={cartItems}
+            clearCart={clearCart}
+            deleteItem={deleteItem}
+            updateCart={updateCart}
+            decrementCart={decrementCart}
+          />
+        </Button>
       </Box>
     </Box >
   )

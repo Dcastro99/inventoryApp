@@ -25,6 +25,7 @@ export default function Products({ alert }) {
     addProduct(
       formData.product_name.value,
       formData.unit_of_measure.value,
+      // formData.product_quantity.value,
       formData.product_quantity.value,
       id,
       checked
