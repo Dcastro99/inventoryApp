@@ -17,16 +17,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
+export default function ShoppingList({ cartItems, clearCart, deleteItem, updateCart, decrementCart }) {
   const [newItem, setNewItem] = useState('');
   const [open, setOpen] = useState(false);
-  const [newQty, setNewQty] = useState();
-  // const [isChecked, setIsChecked] = useState('');
-  const { addCartProduct, decrementProduct, } = useContext(ProductContext);
-  console.log('newQty!', newQty)
-  console.log('newItem!', newItem)
-  // console.log('isChecked!', isChecked)
-  console.log('cartItems!', cartItems)
+  const [newQty, setNewQty] = useState(0);
+  const { updateProduct } = useContext(ProductContext);
+  console.log('cartItems}}}}}}}}}}', cartItems)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -43,13 +39,19 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
       }
       return item;
     })
-    // setIsChecked(false)
-    // resetProduct(cartItem)
     setNewItem(newItems)
     deleteItem(cartItem.newId);
     setNewQty('');
+  }
+
+  const handleQty = (e) => {
+    e.preventDefault();
+    console.log('e.target', e.target.value)
+
+    setNewQty(e.target.value)
 
   }
+
 
   const handleCheck = (item) => {
     console.log(' item=====>', item)
@@ -58,31 +60,63 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
         x.checked = !x.checked
 
         if (x.checked) {
-          let sum = parseInt(x.qty) + parseInt(newQty)
-          addCartProduct(
-            item.productName,
-            item.uom,
-            item.qty = sum,
-            item.id,
-            item.checked
+          console.log('item passing in addCartProduct!', item)
+          console.log('item.qty', x.qty)
+          console.log('item.prevQty', x.prevQty)
+          console.log('newQTY', newQty)
+          let sum = parseInt(x.qty) + parseInt(newQty);
+          updateCart(
+            x.productName,
+            x.uom,
+            x.prevQty,
+            x.qty = sum,
+            x.id,
+            x.newId,
+            x.checked
           )
+
+          updateProduct(
+            x.productName,
+            x.uom,
+            x.qty = sum,
+            x.id,
+          );
         } else if (
           !x.checked
         ) {
-          let sum = parseInt(item.qty) - parseInt(newQty);
-          decrementProduct(
-            item.productName,
-            item.uom,
-            item.qty = sum,
-            item.id,
-            item.checked
-          )
-        }
+          console.log('item passing in decrement!', item)
+          console.log('item.qty', x.qty)
+          console.log('item.prevQty', x.prevQty)
+          console.log('newQTY', newQty)
+          let sum = parseInt(x.qty) - parseInt(x.prevQty);
+          console.log('sum::::::::::::', sum)
+          setNewQty(x.prevQty);
 
+          decrementCart(
+            x.productName,
+            x.uom,
+            x.prevQty = sum,
+            x.qty = sum,
+            x.id,
+            x.newId,
+            x.checked
+          )
+
+          updateProduct(
+            x.productName,
+            x.uom,
+            x.qty = sum,
+            x.id,
+          );
+
+        }
       }
+
       return x;
     });
+
     setNewItem(items);
+
 
   }
 
@@ -140,11 +174,12 @@ export default function ShoppingList({ cartItems, clearCart, deleteItem }) {
               <>
                 < Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1 }}>
                   <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
-                    {console.log('item.checked', item.checked)}
-                    <Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>{item.checked === true ? <del>{item.productName}</del> : item.productName}</Typography>
-                    {console.log('itemzzzz', item)}
+                    {/* {console.log('item.checked', item.checked)} */}
+                    {item.checked === true ? (<Typography sx={{ fontWeight: 'bold', fontSize: 20, }}><del>{item.productName}</del></Typography>) : (<Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>{item.productName}</Typography>)}
+
+                    {/* {console.log('itemzzzz', item)} */}
                     {/* <Typography sx={{ color: 'lightGray' }}>{item.qty}</Typography> */}
-                    <TextField label="Qty" type='number' name='product_quantity' required onChange={(e) => setNewQty(e.target.value)} sx={{
+                    <TextField label="Qty" type='number' name='product_quantity' required onChange={(e) => handleQty(e)} sx={{
                       width: '80px',
                     }} />
                     {item.checked === false ? (<CheckBoxOutlineBlankOutlinedIcon onClick={() => handleCheck(item)} />) : (<CheckBoxOutlinedIcon onClick={() => handleCheck(item)} />)}
