@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Button } from '@mui/material';
 import ProductContext from '../context/productContext';
 import EditModal from './EditModal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import Button from '@mui/material/Button';
 import Options from './Options';
 
 
@@ -52,10 +51,10 @@ export default function BasicTable({ addToCart, handleAlert }) {
                   <TableCell align="center">{item.uom}</TableCell>
                   <TableCell align="right" sx={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginRight: 2, marginTop: 1 }}>{item.qty}</TableCell>
                   <TableCell align="center">
-                    {/* {console.log('PRODUCT', row)} */}
-                    {/* <Button onClick={() => { editItem(row) }} > */}
-                    <EditModal item={item} />
 
+                    <div>
+                      <EditModal item={item} />
+                    </div>
                     {/* </Button> */}
                   </TableCell>
                   <TableCell align="left">
@@ -73,7 +72,9 @@ export default function BasicTable({ addToCart, handleAlert }) {
 
                   </TableCell>
                   <TableCell>
-                    <Options item={item} addToCart={addToCart} handleAlert={handleAlert} />
+                    <div>
+                      <Options item={item} addToCart={addToCart} handleAlert={handleAlert} />
+                    </div>
                   </TableCell>
                 </TableRow>
               </TableBody>

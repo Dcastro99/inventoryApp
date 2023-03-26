@@ -69,20 +69,24 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
                 marginTop: 5,
               }}>
                 <NotesModal />
-                <Button sx={OptionStyle.buttons}>Reminders</Button>
-                <Button sx={{
-                  backgroundColor: 'white',
-                  color: '#626D75',
-                  borderRadius: '10px',
-                  divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                  '&:hover': {
+                <div>
+                  <Button sx={OptionStyle.buttons}>Reminders</Button>
+                </div>
+                <div>
+                  <Button sx={{
                     backgroundColor: 'white',
-                    color: 'black',
-                  },
-                  margin: 1
-                }}
-                  onClick={() => { addItemHandler() }}
-                ><AddShoppingCartIcon /></Button>
+                    color: '#626D75',
+                    borderRadius: '10px',
+                    divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+                    '&:hover': {
+                      backgroundColor: 'white',
+                      color: 'black',
+                    },
+                    margin: 1
+                  }}
+                    onClick={() => { addItemHandler() }}
+                  ><AddShoppingCartIcon /></Button>
+                </div>
               </Box>
 
             </Paper>
