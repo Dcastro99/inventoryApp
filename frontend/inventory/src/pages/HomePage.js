@@ -69,8 +69,10 @@ export default function HomePage() {
     }
   }
 
-  const clearCart = () => {
-    setCartItems([]);
+  const deleteItemInCart = (id) => {
+    console.log('deleteItemInCart--->', id)
+
+    setCartItems(cartItems.filter((item) => item.newId !== id));
   }
 
 
@@ -78,9 +80,9 @@ export default function HomePage() {
     <Box sx={{ width: '100%' }}>
       <Header
         cartItems={cartItems}
-        clearCart={clearCart}
         updateCart={updateCart}
         decrementCart={decrementCart}
+        deleteItemInCart={deleteItemInCart}
       />
 
       <Home addToCart={addToCart} />
