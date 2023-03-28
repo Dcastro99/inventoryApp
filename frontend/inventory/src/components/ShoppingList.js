@@ -23,7 +23,8 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
   const [newQty, setNewQty] = useState(0);
   const { updateProduct } = useContext(ProductContext);
   const [completedItem, setCompletedItem] = useState([]);
-
+  console.log('newItemssssssw', newItem)
+  console.log('completedItem', completedItem)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -45,7 +46,8 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
     const items = newItem.map(x => {
       if (x.newId === item.newId) {
         x.checked = !x.checked
-
+        console.log('item checked', item.checked)
+        console.log('x checked', x.checked)
         if (x.checked) {
           let sum = parseInt(x.qty) + parseInt(newQty);
           console.log('x.prevQty', x.prevQty)
@@ -67,7 +69,6 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             x.qty = sum,
             x.id,
           );
-          console.log('item UPDATED!!', item)
           let itemToComplete = completedItem.find((item) => item.productName === x.productName);
           if (itemToComplete) {
             itemToComplete.productName = x.productName;
@@ -132,16 +133,18 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
     setCompletedItem([]);
   }
 
-  const handleUpdate = (item) => {
+
+  const handleUndo = (item) => {
     let items = newItem.map(x => {
       if (x.newId === item.newId) {
-        x.checked = !x.checked
+        x.checked = !x.checked;
 
 
         let sum = parseInt(x.qty) - parseInt(x.prevQty);
-        // console.log('x.prevQty', x.prevQty)
-        // console.log('newQty', newQty)
-        // console.log('Newqty+', sum)
+        console.log('x.prevQty', x.prevQty)
+        console.log('newQty', newQty)
+        console.log('Newqty+', sum)
+        console.log('x.checked', x.checked)
         setNewQty(x.prevQty);
 
         decrementCart(
@@ -164,9 +167,11 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
       }
       return x;
     });
-    setNewItem(items);
-    setCompletedItem([]);
 
+    setNewItem(items);
+    setCompletedItem(completedItem.filter((x) => x.newId !== item.newId));
+    // setCompletedItem([]);
+    // console.log('new items after undo', newItem);
   }
 
 
@@ -220,6 +225,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
           {newItem.map((item) => {
             return (
               <>
+
                 {item.checked === false ? (
                   < Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1 }}>
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
@@ -267,30 +273,43 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 10, marginBottom: 10, padding: 5, borderRadius: 5, width: 800, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)' }}>
               <Typography sx={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Completed Items</Typography>
 
-
               {completedItem.map((x) => {
-                console.log('x.productName', x.productName)
-                return (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1, width: '80%' }}>
-                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
-                    <Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>{x.productName}</Typography>
-                    <Button sx={{
-                      backgroundColor: 'WhiteSmoke',
-                      color: '#626D75',
-                      borderRadius: '10px',
-                      divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                      '&:hover': {
-                        backgroundColor: 'lightGray',
-                        color: '#FF7F50',
-                      },
+                return (
+                  <>
+                    {x.checked ? <>
 
-                    }} onClick={() => handleUpdate(x)}><Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>Undo</Typography></Button>
-                  </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 175, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 3.1, borderRadius: 2, marginLeft: 5 }}>
-                    Current Qty:
-                    <Typography sx={{ fontWeight: 'bold', }}>{x.qty}</Typography>
-                  </Box>
-                  {console.log('x---->', x)}
-                </Box>)
+
+                      {console.log('item.checked', x.checked)}
+
+                      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1, width: '80%' }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
+                          <del style={{ 'color': '#FF7F50' }}  >
+                            <Typography sx={{ fontWeight: 'bold', fontSize: 20, color: 'black' }}> {x.productName}</Typography></del>
+                          <Button sx={{
+                            backgroundColor: 'WhiteSmoke',
+                            color: '#626D75',
+                            borderRadius: '10px',
+                            divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+                            '&:hover': {
+                              backgroundColor: 'lightGray',
+                              color: '#FF7F50',
+                            },
+
+                          }} onClick={() => handleUndo(x)}><Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>Undo</Typography></Button>
+                        </Box>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 175, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 3.1, borderRadius: 2, marginLeft: 5 }}>
+                          Current Qty:
+                          <Typography sx={{ fontWeight: 'bold', }}>{x.qty}</Typography>
+                        </Box>
+                        {console.log('x---->', x)}
+                      </Box>
+
+
+
+
+                    </> : <></>}
+                  </>
+                )
               })}
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Button sx={{
@@ -305,8 +324,6 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
                   maxWidth: 360,
                 }} onClick={handleClearAll}>Clear All</Button>
               </Box>
-
-
             </Box>
 
           </Box>
