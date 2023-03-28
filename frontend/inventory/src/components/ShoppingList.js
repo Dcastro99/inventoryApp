@@ -48,10 +48,9 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
 
         if (x.checked) {
           let sum = parseInt(x.qty) + parseInt(newQty);
-          // decrementSum = parseInt(x.qty) - parseInt(x.prevQty);
-          // console.log('x.prevQty', x.prevQty)
-          // console.log('newQty', newQty)
-          // console.log('Newqty+', sum)
+          console.log('x.prevQty', x.prevQty)
+          console.log('newQty', newQty)
+          console.log('Newqty+', sum)
           updateCart(
             x.productName,
             x.uom,
@@ -68,6 +67,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             x.qty = sum,
             x.id,
           );
+          console.log('item UPDATED!!', item)
           let itemToComplete = completedItem.find((item) => item.productName === x.productName);
           if (itemToComplete) {
             itemToComplete.productName = x.productName;
@@ -80,7 +80,9 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             setCompletedItem([...completedItem]);
           }
           else {
-            setCompletedItem([...completedItem, x])
+
+            setCompletedItem((prevState) => [...prevState, x])
+
           }
 
         } else if (
@@ -121,7 +123,6 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
   }
 
 
-
   const handleClearAll = () => {
     let itemsToDelete;
     itemsToDelete = newItem.filter(function (item) {
@@ -129,6 +130,43 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
     });
     setNewItem(itemsToDelete);
     setCompletedItem([]);
+  }
+
+  const handleUpdate = (item) => {
+    let items = newItem.map(x => {
+      if (x.newId === item.newId) {
+        x.checked = !x.checked
+
+
+        let sum = parseInt(x.qty) - parseInt(x.prevQty);
+        // console.log('x.prevQty', x.prevQty)
+        // console.log('newQty', newQty)
+        // console.log('Newqty+', sum)
+        setNewQty(x.prevQty);
+
+        decrementCart(
+          x.productName,
+          x.uom,
+          x.prevQty = sum,
+          x.qty = sum,
+          x.id,
+          x.newId,
+          x.checked
+        )
+
+        updateProduct(
+          x.productName,
+          x.uom,
+          x.qty = sum,
+          x.id,
+        );
+
+      }
+      return x;
+    });
+    setNewItem(items);
+    setCompletedItem([]);
+
   }
 
 
@@ -232,7 +270,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
 
               {completedItem.map((x) => {
                 console.log('x.productName', x.productName)
-                return (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1, width: '50%' }}>
+                return (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1, width: '80%' }}>
                   <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
                     <Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>{x.productName}</Typography>
                     <Button sx={{
@@ -244,9 +282,14 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
                         backgroundColor: 'lightGray',
                         color: '#FF7F50',
                       },
-                    }}><Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>Undo</Typography></Button>
+
+                    }} onClick={() => handleUpdate(x)}><Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>Undo</Typography></Button>
                   </Box>
-                  {console.log('x', x)}
+                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 175, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 3.1, borderRadius: 2, marginLeft: 5 }}>
+                    Current Qty:
+                    <Typography sx={{ fontWeight: 'bold', }}>{x.qty}</Typography>
+                  </Box>
+                  {console.log('x---->', x)}
                 </Box>)
               })}
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
