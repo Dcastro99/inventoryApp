@@ -17,18 +17,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ShoppingList({ cartItems, clearCart, updateCart, decrementCart }) {
+export default function ShoppingList({ cartItems, updateCart, decrementCart, deleteItemInCart }) {
   const [newItem, setNewItem] = useState('');
   const [open, setOpen] = useState(false);
   const [newQty, setNewQty] = useState(0);
-  const { updateProduct, products } = useContext(ProductContext);
-  // let completedItem = [];
+  const { updateProduct } = useContext(ProductContext);
   const [completedItem, setCompletedItem] = useState([]);
-  // let decrementSum;
-  // let deleteAll;
-  console.log('completedItem', completedItem)
-  console.log('newItem in Cart', newItem)
-  console.log('products in inventory', products)
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -38,7 +33,7 @@ export default function ShoppingList({ cartItems, clearCart, updateCart, decreme
   };
 
   const deleteHandler = (cartItem) => {
-    setNewItem(newItem.filter((x) => x.newId !== cartItem.newId))
+    deleteItemInCart(cartItem.newId)
   }
 
   const handleQty = (e) => {
@@ -54,9 +49,9 @@ export default function ShoppingList({ cartItems, clearCart, updateCart, decreme
         if (x.checked) {
           let sum = parseInt(x.qty) + parseInt(newQty);
           // decrementSum = parseInt(x.qty) - parseInt(x.prevQty);
-          console.log('x.prevQty', x.prevQty)
-          console.log('newQty', newQty)
-          console.log('Newqty+', sum)
+          // console.log('x.prevQty', x.prevQty)
+          // console.log('newQty', newQty)
+          // console.log('Newqty+', sum)
           updateCart(
             x.productName,
             x.uom,
@@ -92,9 +87,9 @@ export default function ShoppingList({ cartItems, clearCart, updateCart, decreme
           !x.checked
         ) {
           let sum = parseInt(x.qty) - parseInt(x.prevQty);
-          console.log('x.prevQty', x.prevQty)
-          console.log('newQty', newQty)
-          console.log('Newqty+', sum)
+          // console.log('x.prevQty', x.prevQty)
+          // console.log('newQty', newQty)
+          // console.log('Newqty+', sum)
           setNewQty(x.prevQty);
 
           decrementCart(
@@ -128,46 +123,12 @@ export default function ShoppingList({ cartItems, clearCart, updateCart, decreme
 
 
   const handleClearAll = () => {
-    newItem.map((x) => {
-      if (x.checked === true) {
-
-        setNewItem([])
-        setCompletedItem([])
-      }
-      else {
-        setCompletedItem([])
-      }
-      return x;
-    })
-    // ) : (setCompletedItem([]))
-    //     if (x.id === product.id) {
-
-
-    //       decrementCart(
-    //         x.productName,
-    //         x.uom,
-    //         x.prevQty = decrementSum,
-    //         x.qty = decrementSum,
-    //         x.id,
-    //         x.newId,
-    //         x.checked
-    //       )
-
-    //       updateProduct(
-    //         x.productName,
-    //         x.uom,
-    //         x.qty = decrementSum,
-    //         x.id,
-    //       );
-
-    //     }
-    //     return x;
-    //   })
-
-
-    // });
-
-
+    let itemsToDelete;
+    itemsToDelete = newItem.filter(function (item) {
+      return !item.checked;
+    });
+    setNewItem(itemsToDelete);
+    setCompletedItem([]);
   }
 
 
@@ -285,11 +246,9 @@ export default function ShoppingList({ cartItems, clearCart, updateCart, decreme
                       },
                     }}><Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>Undo</Typography></Button>
                   </Box>
+                  {console.log('x', x)}
                 </Box>)
               })}
-
-
-
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Button sx={{
                   backgroundColor: 'white',
@@ -303,6 +262,8 @@ export default function ShoppingList({ cartItems, clearCart, updateCart, decreme
                   maxWidth: 360,
                 }} onClick={handleClearAll}>Clear All</Button>
               </Box>
+
+
             </Box>
 
           </Box>

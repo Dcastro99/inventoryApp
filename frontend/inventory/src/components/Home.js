@@ -17,7 +17,7 @@ export default function Home({ addToCart }) {
     setAlert('');
   }
 
-  setTimeout(ClearOut, 6000)
+  setTimeout(ClearOut, 4000)
 
   return (
     <Box sx={{
