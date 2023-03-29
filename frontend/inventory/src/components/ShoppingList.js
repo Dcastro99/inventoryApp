@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { Box } from '@mui/system';
+import { ShoppingListStyle } from '../style/ShoppingListStyle';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -23,36 +24,43 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
   const [newQty, setNewQty] = useState(0);
   const { updateProduct } = useContext(ProductContext);
   const [completedItem, setCompletedItem] = useState([]);
-  console.log('newItemssssssw', newItem)
-  console.log('completedItem', completedItem)
+  // let map = new Map();
+  // console.log('newItemssssssw', newItem)
+  // console.log('completedItem', completedItem)
+
+  //------------------Dialog------------------//
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  //------------------Dialog------------------//
   const handleClose = () => {
     setOpen(false);
   };
 
+  //------------------DELETE HANDLER------------------//
   const deleteHandler = (cartItem) => {
     deleteItemInCart(cartItem.newId)
   }
 
+  //------------------HANDLE QTY------------------//
   const handleQty = (e) => {
     e.preventDefault();
     setNewQty(e.target.value)
   }
 
+  //------------------HANDLE CHECK------------------//
   const handleCheck = (item) => {
     const items = newItem.map(x => {
       if (x.newId === item.newId) {
         x.checked = !x.checked
-        console.log('item checked', item.checked)
-        console.log('x checked', x.checked)
+        // console.log('item checked', item.checked)
+        // console.log('x checked', x.checked)
         if (x.checked) {
           let sum = parseInt(x.qty) + parseInt(newQty);
-          console.log('x.prevQty', x.prevQty)
-          console.log('newQty', newQty)
-          console.log('Newqty+', sum)
+          // console.log('x.prevQty', x.prevQty)
+          // console.log('newQty', newQty)
+          // console.log('Newqty+', sum)
           updateCart(
             x.productName,
             x.uom,
@@ -111,28 +119,30 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             x.qty = sum,
             x.id,
           );
-
         }
       }
-
       return x;
     });
-
     setNewItem(items);
-
-
   }
 
+
+  //------------------HANDLE CLEAR ALL------------------//
 
   const handleClearAll = () => {
-    let itemsToDelete;
-    itemsToDelete = newItem.filter(function (item) {
-      return !item.checked;
-    });
-    setNewItem(itemsToDelete);
-    setCompletedItem([]);
+
+    for (let i = 0; i < newItem.length; i++) {
+      if (newItem[i].newId === completedItem[i].newId) {
+        // console.log('newItem[i].newId', newItem[i].newId)
+        deleteItemInCart(newItem[i].newId)
+        setCompletedItem(completedItem.filter((x) => x.newId !== completedItem[i].newId));
+      }
+    }
+
   }
 
+
+  //------------------HANDLE UNDO------------------//
 
   const handleUndo = (item) => {
     let items = newItem.map(x => {
@@ -141,10 +151,10 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
 
 
         let sum = parseInt(x.qty) - parseInt(x.prevQty);
-        console.log('x.prevQty', x.prevQty)
-        console.log('newQty', newQty)
-        console.log('Newqty+', sum)
-        console.log('x.checked', x.checked)
+        // console.log('x.prevQty', x.prevQty)
+        // console.log('newQty', newQty)
+        // console.log('Newqty+', sum)
+        // console.log('x.checked', x.checked)
         setNewQty(x.prevQty);
 
         decrementCart(
@@ -167,34 +177,19 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
       }
       return x;
     });
-
     setNewItem(items);
     setCompletedItem(completedItem.filter((x) => x.newId !== item.newId));
-    // setCompletedItem([]);
-    // console.log('new items after undo', newItem);
   }
-
-
-
 
 
   useEffect(() => {
     setNewItem(cartItems)
-
   }, [cartItems])
+
 
   return (
     <div >
-      <Button sx={{
-        backgroundColor: 'white',
-        color: '#626D75',
-        borderRadius: '10px',
-        divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-        '&:hover': {
-          backgroundColor: 'white',
-          color: 'black',
-        }
-      }} onClick={handleClickOpen}>
+      <Button sx={ShoppingListStyle.modalButtun} onClick={handleClickOpen}>
         <ShoppingCartOutlinedIcon />
       </Button>
       <Dialog
@@ -203,7 +198,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar sx={{ position: 'relative', backgroundColor: 'gray', marginBottom: 10 }}>
+        <AppBar sx={ShoppingListStyle.Appbar}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -227,10 +222,10 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
               <>
 
                 {item.checked === false ? (
-                  < Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1 }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
+                  < Box sx={ShoppingListStyle.mainListBox}>
+                    <Box sx={ShoppingListStyle.itemBox}>
                       {/* {console.log('item.checked', item.checked)} */}
-                      {item.checked === true ? (<Typography sx={{ fontWeight: 'bold', fontSize: 20, }}><del>{item.productName}</del></Typography>) : (<Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>{item.productName}</Typography>)}
+                      {item.checked === true ? (<Typography sx={ShoppingListStyle.productName}><del>{item.productName}</del></Typography>) : (<Typography sx={ShoppingListStyle.productName}>{item.productName}</Typography>)}
 
                       {/* {console.log('itemzzzz', item)} */}
                       {/* <Typography sx={{ color: 'lightGray' }}>{item.qty}</Typography> */}
@@ -242,20 +237,10 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
                         }} />)}
                       {item.checked === false ? (<CheckBoxOutlineBlankOutlinedIcon onClick={() => handleCheck(item)} />) : (<CheckBoxOutlinedIcon onClick={() => handleCheck(item)} />)}
                       <div>
-                        <Button sx={{
-                          backgroundColor: 'white',
-                          color: '#FF7F50',
-                          borderRadius: '10px',
-                          divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                          '&:hover': {
-                            backgroundColor: 'smokeWhite',
-                            color: 'red',
-                          },
-                          margin: 1
-                        }} onClick={() => deleteHandler(item)}>Delete</Button>
+                        <Button sx={ShoppingListStyle.deleteItemButton} onClick={() => deleteHandler(item)}>Delete</Button>
                       </div>
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 175, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 4, borderRadius: 2, marginLeft: 5 }}>
+                    <Box sx={ShoppingListStyle.currentQtyBox}>
                       Current Qty:
                       <Typography sx={{ fontWeight: 'bold', }}>{item.qty}</Typography>
                     </Box>
@@ -266,22 +251,18 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             )
           })
           }
-        </>) : (<Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}><Typography sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '140px', maxWidth: 360, fontSize: 20, fontWeight: 'bold', padding: 5, borderRadius: 5, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', backgroundColor: 'whitesmoke' }}>Your shopping list is empty</Typography></Box>)}
+        </>) : (<Box sx={ShoppingListStyle.emptyCartBox}><Typography sx={ShoppingListStyle.emptyCartText}>Your shopping list is empty</Typography></Box>)}
         {completedItem.length > 0 ? (<>
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 10, marginBottom: 10, padding: 5, borderRadius: 5, width: 800, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)' }}>
+            <Box sx={ShoppingListStyle.emptyCartContainer}>
               <Typography sx={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Completed Items</Typography>
 
               {completedItem.map((x) => {
                 return (
                   <>
                     {x.checked ? <>
-
-
-                      {console.log('item.checked', x.checked)}
-
-                      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1, width: '80%' }}>
+                      <Box sx={ShoppingListStyle.completedCartContainer}>
                         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
                           <del style={{ 'color': '#FF7F50' }}  >
                             <Typography sx={{ fontWeight: 'bold', fontSize: 20, color: 'black' }}> {x.productName}</Typography></del>
@@ -301,12 +282,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
                           Current Qty:
                           <Typography sx={{ fontWeight: 'bold', }}>{x.qty}</Typography>
                         </Box>
-                        {console.log('x---->', x)}
                       </Box>
-
-
-
-
                     </> : <></>}
                   </>
                 )

@@ -85,7 +85,7 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
                     margin: 1
                   }}
                     onClick={() => { addItemHandler() }}
-                  ><AddShoppingCartIcon /></Button>
+                  ><AddShoppingCartIcon sx={{ fontSize: 35 }} /></Button>
                 </div>
               </Box>
 
