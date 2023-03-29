@@ -8,9 +8,9 @@ const chance = new Chance();
 
 export default function HomePage() {
   const [cartItems, setCartItems] = useState([]);
-  // console.log('cartItems::::', cartItems);
 
 
+  //------------------ADD TO CART------------------//
   const addToCart = (productName, uom, qty, id) => {
     // console.log('before adding to cart', productName, uom, qty, id)
     const newId = chance.bb_pin();
@@ -33,6 +33,7 @@ export default function HomePage() {
     }
   }
 
+  //------------------UPDATE CART------------------//
   const updateCart = (productName, uom, prevQty, qty, id, newId, checked) => {
     let item = cartItems.find((item) => item.newId === newId);
     if (item) { // if item exists, update qty
@@ -50,6 +51,8 @@ export default function HomePage() {
       setCartItems((prevState) => [...prevState, { productName, uom, prevQty, qty, id, checked, newId }]);
     }
   }
+
+  //------------------DECREMENT CART------------------//
 
   const decrementCart = (productName, uom, prevQty, qty, id, newId, checked) => {
     let item = cartItems.find((item) => item.newId === newId);
@@ -69,9 +72,8 @@ export default function HomePage() {
     }
   }
 
+  //------------------DELETE ITEM IN CART------------------//
   const deleteItemInCart = (id) => {
-    console.log('deleteItemInCart--->', id)
-
     setCartItems(cartItems.filter((item) => item.newId !== id));
   }
 

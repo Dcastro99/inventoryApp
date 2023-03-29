@@ -26,10 +26,8 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
   }, [item])
 
 
-
   const addItemHandler = () => {
     const newItem = itemToAdd;
-
     addToCart(
       newItem.productName,
       newItem.uom,
@@ -41,12 +39,7 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
   }
 
   return (
-    <Box sx={{
-      // backgroundColor: 'pink',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}>
+    <Box sx={OptionStyle.mainContainer}>
       <Button sx={OptionStyle.mainButton} onClick={handleOpen}> <MoreHorizIcon /></Button>
       <Modal
         open={open}
@@ -60,41 +53,21 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
               <Grid align='center'>
                 <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>{item.productName} options</Typography>
               </Grid>
-              <Box sx={{
-                // backgroundColor: 'pink',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 5,
-              }}>
+              <Box sx={OptionStyle.boxWrapper}>
                 <NotesModal />
                 <div>
                   <Button sx={OptionStyle.buttons}>Reminders</Button>
                 </div>
                 <div>
-                  <Button sx={{
-                    backgroundColor: 'white',
-                    color: '#626D75',
-                    borderRadius: '10px',
-                    divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                    '&:hover': {
-                      backgroundColor: 'white',
-                      color: 'black',
-                    },
-                    margin: 1
-                  }}
+                  <Button sx={OptionStyle.cartButton}
                     onClick={() => { addItemHandler() }}
                   ><AddShoppingCartIcon sx={{ fontSize: 35 }} /></Button>
                 </div>
               </Box>
-
             </Paper>
           </Grid>
         </Box >
-
       </Modal>
-
     </Box>
   )
 }

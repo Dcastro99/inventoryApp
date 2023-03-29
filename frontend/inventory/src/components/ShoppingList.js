@@ -253,32 +253,22 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
           }
         </>) : (<Box sx={ShoppingListStyle.emptyCartBox}><Typography sx={ShoppingListStyle.emptyCartText}>Your shopping list is empty</Typography></Box>)}
         {completedItem.length > 0 ? (<>
-          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+          <Box sx={ShoppingListStyle.completedCartMainBox}>
 
             <Box sx={ShoppingListStyle.emptyCartContainer}>
-              <Typography sx={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Completed Items</Typography>
+              <Typography sx={ShoppingListStyle.completedCartFont}>Completed Items</Typography>
 
               {completedItem.map((x) => {
                 return (
                   <>
                     {x.checked ? <>
                       <Box sx={ShoppingListStyle.completedCartContainer}>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
+                        <Box sx={ShoppingListStyle.completedCartBox}>
                           <del style={{ 'color': '#FF7F50' }}  >
-                            <Typography sx={{ fontWeight: 'bold', fontSize: 20, color: 'black' }}> {x.productName}</Typography></del>
-                          <Button sx={{
-                            backgroundColor: 'WhiteSmoke',
-                            color: '#626D75',
-                            borderRadius: '10px',
-                            divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                            '&:hover': {
-                              backgroundColor: 'lightGray',
-                              color: '#FF7F50',
-                            },
-
-                          }} onClick={() => handleUndo(x)}><Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>Undo</Typography></Button>
+                            <Typography sx={ShoppingListStyle.completeProductName}> {x.productName}</Typography></del>
+                          <Button sx={ShoppingListStyle.undoButton} onClick={() => handleUndo(x)}><Typography sx={ShoppingListStyle.undoButtonFont}>Undo</Typography></Button>
                         </Box>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 175, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 3.1, borderRadius: 2, marginLeft: 5 }}>
+                        <Box sx={ShoppingListStyle.CompletedCurrentQtyBox}>
                           Current Qty:
                           <Typography sx={{ fontWeight: 'bold', }}>{x.qty}</Typography>
                         </Box>
@@ -287,18 +277,8 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
                   </>
                 )
               })}
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Button sx={{
-                  backgroundColor: 'white',
-                  color: '#FF7F50',
-                  borderRadius: '10px',
-                  divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                  '&:hover': {
-                    backgroundColor: 'white',
-                    color: 'black',
-                  }, marginTop: 10,
-                  maxWidth: 360,
-                }} onClick={handleClearAll}>Clear All</Button>
+              <Box sx={ShoppingListStyle.clearAllBox}>
+                <Button sx={ShoppingListStyle.clearAllButton} onClick={handleClearAll}>Clear All</Button>
               </Box>
             </Box>
 

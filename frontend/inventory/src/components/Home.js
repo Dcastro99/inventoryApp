@@ -13,11 +13,11 @@ export default function Home({ addToCart }) {
     setAlert(x);
   }
 
-  function ClearOut() {
+  const ClearOut = () => {
     setAlert('');
   }
 
-  setTimeout(ClearOut, 4000)
+  setTimeout(ClearOut, 2000)
 
   return (
     <Box sx={{

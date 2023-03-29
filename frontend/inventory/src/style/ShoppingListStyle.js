@@ -98,4 +98,74 @@ export const ShoppingListStyle = {
     marginTop: 1,
     width: '80%'
   },
+  completedCartBox: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: 500,
+    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    padding: 2,
+    borderRadius: 2
+  },
+  completedCartFont: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginBottom: 5
+  },
+  undoButton: {
+    backgroundColor: 'WhiteSmoke',
+    color: '#626D75',
+    borderRadius: '10px',
+    divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    '&:hover': {
+      backgroundColor: 'lightGray',
+      color: '#FF7F50',
+    },
+
+  },
+  undoButtonFont: {
+    fontWeight: 'bold', fontSize: 20,
+  },
+  completedCartMainBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10
+  },
+  completeProductName: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: 'black'
+  },
+  CompletedCurrentQtyBox: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: 175,
+    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    padding: 3.1,
+    borderRadius: 2,
+    marginLeft: 5
+  },
+  clearAllBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  clearAllButton: {
+    backgroundColor: 'white',
+    color: '#FF7F50',
+    borderRadius: '10px',
+    divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: 'black',
+    }, marginTop: 10,
+    maxWidth: 360,
+  }
 }
