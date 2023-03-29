@@ -27,7 +27,7 @@ export const ProductStyle = {
     // backgroundColor: 'pink'
   },
   addIcon: {
-    fontSize: 40
+    fontSize: 40,
   },
   button: {
     backgroundColor: '#676767',
@@ -37,6 +37,23 @@ export const ProductStyle = {
     '&:hover': {
       backgroundColor: 'white',
       color: '#676767',
+      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    },
+  },
+  modalButton: {
+    color: 'Tomato', backgroundColor: '#B8B8B8', marginTop: 5, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', '&:hover': {
+      backgroundColor: 'white',
+      color: '#676767',
+      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    },
+  }, editModalButton: {
+    backgroundColor: '#B8B8B8',
+    color: 'Tomato',
+    borderRadius: '10px',
+    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: 'Tomato',
       boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     },
   }

@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react'
 import ProductContext from '../context/productContext';
 import { Typography, Button, TextField } from '@mui/material'
-import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
-import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
+// import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+// import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Dialog from '@mui/material/Dialog';
 import AppBar from '@mui/material/AppBar';
@@ -235,7 +236,16 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
                         }} />) : (<TextField label="Qty" type='number' name='product_quantity' required onChange={(e) => handleQty(e)} sx={{
                           width: '80px',
                         }} />)}
-                      {item.checked === false ? (<CheckBoxOutlineBlankOutlinedIcon onClick={() => handleCheck(item)} />) : (<CheckBoxOutlinedIcon onClick={() => handleCheck(item)} />)}
+                      <Button sx={{
+                        backgroundColor: '#F8F8FF',
+                        color: 'grey', padding: 1, borderRadius: 2, '&:hover': {
+                          backgroundColor: 'white',
+                          color: '#676767',
+                          boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+                        },
+                        pointer: 'finger',
+                      }} onClick={() => handleCheck(item)} >Submit</Button>
+                      {/* {item.checked === false ? (<CheckBoxOutlineBlankOutlinedIcon onClick={() => handleCheck(item)} />) : (<CheckBoxOutlinedIcon onClick={() => handleCheck(item)} />)} */}
                       <div>
                         <Button sx={ShoppingListStyle.deleteItemButton} onClick={() => deleteHandler(item)}>Delete</Button>
                       </div>
@@ -266,6 +276,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
                         <Box sx={ShoppingListStyle.completedCartBox}>
                           <del style={{ 'color': '#FF7F50' }}  >
                             <Typography sx={ShoppingListStyle.completeProductName}> {x.productName}</Typography></del>
+                          <CheckCircleOutlineIcon sx={{ color: '#3CB371' }} />
                           <Button sx={ShoppingListStyle.undoButton} onClick={() => handleUndo(x)}><Typography sx={ShoppingListStyle.undoButtonFont}>Undo</Typography></Button>
                         </Box>
                         <Box sx={ShoppingListStyle.CompletedCurrentQtyBox}>
