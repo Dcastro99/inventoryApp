@@ -44,13 +44,7 @@ export default function Products({ alert }) {
       }}>
 
         <Box  >
-          <Button sx={{
-            color: 'Tomato', backgroundColor: '#B8B8B8', marginTop: 5, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', '&:hover': {
-              backgroundColor: 'white',
-              color: '#676767',
-              boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-            },
-          }} onClick={handleOpen}>Add Product</Button>
+          <Button sx={ProductStyle.modalButton} onClick={handleOpen}>Add Product</Button>
           <Modal
             open={open}
             onClose={handleClose}

@@ -4,6 +4,7 @@ import ProductContext from '../context/productContext';
 import EditModal from './EditModal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Options from './Options';
+import { TableStyle } from '../style/TableStyle';
 
 
 export default function BasicTable({ addToCart, handleAlert }) {
@@ -23,12 +24,12 @@ export default function BasicTable({ addToCart, handleAlert }) {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: 10 }}>
+    <Box sx={TableStyle.mainContainer}>
       {newProducts.length > 0 ? (
         <TableContainer component={Paper} >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
-              <TableRow>
+              <TableRow sx={{ backgroundColor: '	#F0F0F0' }}>
                 <TableCell>Product Name</TableCell>
                 <TableCell align="center">Unit of Measure</TableCell>
                 <TableCell align="right">Quantity</TableCell>
@@ -39,6 +40,8 @@ export default function BasicTable({ addToCart, handleAlert }) {
               </TableRow>
             </TableHead>
             {newProducts.map(item => (
+
+
               <TableBody >
 
                 <TableRow
@@ -49,7 +52,7 @@ export default function BasicTable({ addToCart, handleAlert }) {
                     {item.productName}
                   </TableCell>
                   <TableCell align="center">{item.uom}</TableCell>
-                  <TableCell align="right" sx={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginRight: 2, marginTop: 1 }}>{item.qty}</TableCell>
+                  <TableCell align="right" sx={TableStyle.tableQty}>{item.qty}</TableCell>
                   <TableCell align="center">
 
                     <div>
@@ -58,17 +61,7 @@ export default function BasicTable({ addToCart, handleAlert }) {
                     {/* </Button> */}
                   </TableCell>
                   <TableCell align="left">
-                    <Button sx={{
-                      backgroundColor: '#B8B8B8',
-                      color: 'Tomato',
-                      borderRadius: '10px',
-                      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                      '&:hover': {
-                        backgroundColor: 'white',
-                        color: 'Tomato',
-                        boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                      },
-                    }} onClick={() => { deleteItem(item) }}> <DeleteForeverIcon /></Button>
+                    <Button sx={TableStyle.deleteButton} onClick={() => { deleteItem(item) }}> <DeleteForeverIcon /></Button>
 
                   </TableCell>
                   <TableCell>
@@ -76,12 +69,16 @@ export default function BasicTable({ addToCart, handleAlert }) {
                       <Options item={item} addToCart={addToCart} handleAlert={handleAlert} />
                     </div>
                   </TableCell>
+
                 </TableRow>
+
               </TableBody>
+
             ))}
           </Table>
+
         </TableContainer>)
-        : (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'LightSlateGray', color: 'white', fontSize: 30, marginTop: 5, width: 400, height: 200, borderRadius: 2 }}>Nothing in your Pantry!</Box>)}
+        : (<Box sx={TableStyle.emptyPantry}>Nothing in your Pantry!</Box>)}
     </Box>
   );
 }

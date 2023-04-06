@@ -1,32 +1,34 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
 import ShoppingList from './ShoppingList'
+import { HeaderStyle } from '../style/HeaderStyle';
 
 
-export default function Header({ cartItems, updateCart, decrementCart, deleteItemInCart }) {
+export default function Header({ cartItems,
+  updateCart, decrementCart,
+  deleteItemInCart,
+  completedCart,
+  completeCartFunction,
+  clearCompletedCart,
+  deleteCompleteCartItem
+}) {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 110 }}>
-      <Box sx={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 110 }}>
-        <Typography sx={{ marginLeft: 15, fontFamily: 'Dancing Script', fontSize: 70 }} variant="h3">Welcome to MyPantry</Typography>
+    <Box sx={HeaderStyle.mainContainer}>
+      <Box sx={HeaderStyle.titleBox}>
+        <Typography sx={HeaderStyle.mainTitle} variant="h3">Welcome to MyPantry</Typography>
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 4 }}>
-        <Box sx={{
-          backgroundColor: 'white',
-          color: '#626D75',
-          borderRadius: '10px',
-          divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-          '&:hover': {
-            backgroundColor: 'white',
-            color: 'black',
-          }
-
-        }} >
+      <Box sx={HeaderStyle.mainBox}>
+        <Box sx={HeaderStyle.buttonContainer} >
           <div>
             <ShoppingList
               cartItems={cartItems}
               deleteItemInCart={deleteItemInCart}
               updateCart={updateCart}
               decrementCart={decrementCart}
+              completedCart={completedCart}
+              completeCartFunction={completeCartFunction}
+              clearCompletedCart={clearCompletedCart}
+              deleteCompleteCartItem={deleteCompleteCartItem}
             />
           </div>
         </Box>

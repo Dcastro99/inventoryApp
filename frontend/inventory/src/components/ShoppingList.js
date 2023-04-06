@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react'
 import ProductContext from '../context/productContext';
 import { Typography, Button, TextField } from '@mui/material'
-import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
-import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
+// import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+// import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Dialog from '@mui/material/Dialog';
 import AppBar from '@mui/material/AppBar';
@@ -11,48 +12,50 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { Box } from '@mui/system';
+import { ShoppingListStyle } from '../style/ShoppingListStyle';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ShoppingList({ cartItems, updateCart, decrementCart, deleteItemInCart }) {
-  const [newItem, setNewItem] = useState('');
+export default function ShoppingList({ cartItems, updateCart, decrementCart, deleteItemInCart, completedCart, completeCartFunction, clearCompletedCart, deleteCompleteCartItem }) {
+  const [newItem, setNewItem] = useState({});
   const [open, setOpen] = useState(false);
   const [newQty, setNewQty] = useState(0);
   const { updateProduct } = useContext(ProductContext);
-  const [completedItem, setCompletedItem] = useState([]);
-  console.log('newItemssssssw', newItem)
-  console.log('completedItem', completedItem)
+  const [completedItem, setCompletedItem] = useState({});
+
+
+  //------------------Dialog------------------//
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  //------------------Dialog------------------//
   const handleClose = () => {
     setOpen(false);
   };
 
+  //------------------DELETE HANDLER------------------//
   const deleteHandler = (cartItem) => {
     deleteItemInCart(cartItem.newId)
   }
 
+  //------------------HANDLE QTY------------------//
   const handleQty = (e) => {
     e.preventDefault();
     setNewQty(e.target.value)
   }
 
+  //------------------HANDLE CHECK------------------//
   const handleCheck = (item) => {
     const items = newItem.map(x => {
       if (x.newId === item.newId) {
         x.checked = !x.checked
-        console.log('item checked', item.checked)
-        console.log('x checked', x.checked)
+        x.clearAll = true
         if (x.checked) {
           let sum = parseInt(x.qty) + parseInt(newQty);
-          console.log('x.prevQty', x.prevQty)
-          console.log('newQty', newQty)
-          console.log('Newqty+', sum)
           updateCart(
             x.productName,
             x.uom,
@@ -60,7 +63,8 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             x.qty = sum,
             x.id,
             x.newId,
-            x.checked
+            x.checked,
+            x.clearAll,
           )
 
           updateProduct(
@@ -69,31 +73,39 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             x.qty = sum,
             x.id,
           );
-          let itemToComplete = completedItem.find((item) => item.productName === x.productName);
-          if (itemToComplete) {
-            itemToComplete.productName = x.productName;
-            itemToComplete.uom = x.uom;
-            itemToComplete.qty = x.qty;
-            itemToComplete.id = x.id;
-            itemToComplete.newId = x.newId;
-            itemToComplete.checked = x.checked;
 
-            setCompletedItem([...completedItem]);
+          let itemToComplete = completedItem.find((item) => item.productName === x.productName);
+          // console.log('itemToComplete', itemToComplete)
+          if (itemToComplete) {
+            completeCartFunction(
+              itemToComplete.productName = x.productName,
+              itemToComplete.uom = x.uom,
+              itemToComplete.prevQty = x.prevQty,
+              itemToComplete.qty = x.qty,
+              itemToComplete.id = x.id,
+              itemToComplete.newId = x.newId,
+              itemToComplete.checked = x.checked,
+              itemToComplete.clearAll = x.clearAll,
+            )
+            setCompletedItem((prevState) => [...prevState, itemToComplete])
           }
           else {
-
-            setCompletedItem((prevState) => [...prevState, x])
-
+            completeCartFunction(
+              x.productName,
+              x.uom,
+              x.prevQty,
+              x.qty,
+              x.id,
+              x.newId,
+              x.checked,
+              x.clearAll,
+            )
           }
 
         } else if (
           !x.checked
         ) {
           let sum = parseInt(x.qty) - parseInt(x.prevQty);
-          // console.log('x.prevQty', x.prevQty)
-          // console.log('newQty', newQty)
-          // console.log('Newqty+', sum)
-          setNewQty(x.prevQty);
 
           decrementCart(
             x.productName,
@@ -111,40 +123,28 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             x.qty = sum,
             x.id,
           );
-
         }
       }
-
       return x;
     });
-
     setNewItem(items);
-
-
   }
 
+  //------------------HANDLE CLEAR ALL------------------//
 
   const handleClearAll = () => {
-    let itemsToDelete;
-    itemsToDelete = newItem.filter(function (item) {
-      return !item.checked;
-    });
-    setNewItem(itemsToDelete);
-    setCompletedItem([]);
+    clearCompletedCart();
   }
 
 
+  //------------------HANDLE UNDO------------------//
+
   const handleUndo = (item) => {
-    let items = newItem.map(x => {
+    completedItem.map(x => {
       if (x.newId === item.newId) {
         x.checked = !x.checked;
 
-
         let sum = parseInt(x.qty) - parseInt(x.prevQty);
-        console.log('x.prevQty', x.prevQty)
-        console.log('newQty', newQty)
-        console.log('Newqty+', sum)
-        console.log('x.checked', x.checked)
         setNewQty(x.prevQty);
 
         decrementCart(
@@ -167,34 +167,20 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
       }
       return x;
     });
-
-    setNewItem(items);
+    deleteCompleteCartItem(item.newId)
     setCompletedItem(completedItem.filter((x) => x.newId !== item.newId));
-    // setCompletedItem([]);
-    // console.log('new items after undo', newItem);
   }
 
-
-
-
-
+  //----------------- USE EFFECT -----------------//
   useEffect(() => {
     setNewItem(cartItems)
+    setCompletedItem(completedCart)
+  }, [cartItems, completedCart])
 
-  }, [cartItems])
 
   return (
     <div >
-      <Button sx={{
-        backgroundColor: 'white',
-        color: '#626D75',
-        borderRadius: '10px',
-        divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-        '&:hover': {
-          backgroundColor: 'white',
-          color: 'black',
-        }
-      }} onClick={handleClickOpen}>
+      <Button sx={ShoppingListStyle.modalButtun} onClick={handleClickOpen}>
         <ShoppingCartOutlinedIcon />
       </Button>
       <Dialog
@@ -203,7 +189,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar sx={{ position: 'relative', backgroundColor: 'gray', marginBottom: 10 }}>
+        <AppBar sx={ShoppingListStyle.Appbar}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -227,35 +213,30 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
               <>
 
                 {item.checked === false ? (
-                  < Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1 }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
-                      {/* {console.log('item.checked', item.checked)} */}
-                      {item.checked === true ? (<Typography sx={{ fontWeight: 'bold', fontSize: 20, }}><del>{item.productName}</del></Typography>) : (<Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>{item.productName}</Typography>)}
-
-                      {/* {console.log('itemzzzz', item)} */}
-                      {/* <Typography sx={{ color: 'lightGray' }}>{item.qty}</Typography> */}
+                  < Box sx={ShoppingListStyle.mainListBox}>
+                    <Box sx={ShoppingListStyle.itemBox}>
+                      <Typography sx={ShoppingListStyle.productName}>{item.productName}</Typography>
                       {item.checked === true ?
                         (<TextField label="unselect" type='number' name='product_quantity' disabled error required onChange={(e) => handleQty(e)} sx={{
                           width: '80px',
                         }} />) : (<TextField label="Qty" type='number' name='product_quantity' required onChange={(e) => handleQty(e)} sx={{
                           width: '80px',
                         }} />)}
-                      {item.checked === false ? (<CheckBoxOutlineBlankOutlinedIcon onClick={() => handleCheck(item)} />) : (<CheckBoxOutlinedIcon onClick={() => handleCheck(item)} />)}
-                      <div>
-                        <Button sx={{
+                      <Button sx={{
+                        backgroundColor: '#F8F8FF',
+                        color: 'grey', padding: 1, borderRadius: 2, '&:hover': {
                           backgroundColor: 'white',
-                          color: '#FF7F50',
-                          borderRadius: '10px',
-                          divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                          '&:hover': {
-                            backgroundColor: 'smokeWhite',
-                            color: 'red',
-                          },
-                          margin: 1
-                        }} onClick={() => deleteHandler(item)}>Delete</Button>
+                          color: '#676767',
+                          boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+                        },
+                        pointer: 'finger',
+                      }} onClick={() => handleCheck(item)} >Submit</Button>
+                      {/* {item.checked === false ? (<CheckBoxOutlineBlankOutlinedIcon onClick={() => handleCheck(item)} />) : (<CheckBoxOutlinedIcon onClick={() => handleCheck(item)} />)} */}
+                      <div>
+                        <Button sx={ShoppingListStyle.deleteItemButton} onClick={() => deleteHandler(item)}>Delete</Button>
                       </div>
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 175, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 4, borderRadius: 2, marginLeft: 5 }}>
+                    <Box sx={ShoppingListStyle.currentQtyBox}>
                       Current Qty:
                       <Typography sx={{ fontWeight: 'bold', }}>{item.qty}</Typography>
                     </Box>
@@ -266,63 +247,35 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             )
           })
           }
-        </>) : (<Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}><Typography sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '140px', maxWidth: 360, fontSize: 20, fontWeight: 'bold', padding: 5, borderRadius: 5, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', backgroundColor: 'whitesmoke' }}>Your shopping list is empty</Typography></Box>)}
+        </>) : (<Box sx={ShoppingListStyle.emptyCartBox}><Typography sx={ShoppingListStyle.emptyCartText}>Your shopping list is empty</Typography></Box>)}
         {completedItem.length > 0 ? (<>
-          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+          <Box sx={ShoppingListStyle.completedCartMainBox}>
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 10, marginBottom: 10, padding: 5, borderRadius: 5, width: 800, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)' }}>
-              <Typography sx={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Completed Items</Typography>
+            <Box sx={ShoppingListStyle.emptyCartContainer}>
+              <Typography sx={ShoppingListStyle.completedCartFont}>Completed Items</Typography>
 
               {completedItem.map((x) => {
                 return (
                   <>
                     {x.checked ? <>
-
-
-                      {console.log('item.checked', x.checked)}
-
-                      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1, width: '80%' }}>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 500, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 2, borderRadius: 2 }}>
+                      <Box sx={ShoppingListStyle.completedCartContainer}>
+                        <Box sx={ShoppingListStyle.completedCartBox}>
                           <del style={{ 'color': '#FF7F50' }}  >
-                            <Typography sx={{ fontWeight: 'bold', fontSize: 20, color: 'black' }}> {x.productName}</Typography></del>
-                          <Button sx={{
-                            backgroundColor: 'WhiteSmoke',
-                            color: '#626D75',
-                            borderRadius: '10px',
-                            divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                            '&:hover': {
-                              backgroundColor: 'lightGray',
-                              color: '#FF7F50',
-                            },
-
-                          }} onClick={() => handleUndo(x)}><Typography sx={{ fontWeight: 'bold', fontSize: 20, }}>Undo</Typography></Button>
+                            <Typography sx={ShoppingListStyle.completeProductName}> {x.productName}</Typography></del>
+                          <CheckCircleOutlineIcon sx={{ color: '#3CB371' }} />
+                          <Button sx={ShoppingListStyle.undoButton} onClick={() => handleUndo(x)}><Typography sx={ShoppingListStyle.undoButtonFont}>Undo</Typography></Button>
                         </Box>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: 175, boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', padding: 3.1, borderRadius: 2, marginLeft: 5 }}>
+                        <Box sx={ShoppingListStyle.CompletedCurrentQtyBox}>
                           Current Qty:
                           <Typography sx={{ fontWeight: 'bold', }}>{x.qty}</Typography>
                         </Box>
-                        {console.log('x---->', x)}
                       </Box>
-
-
-
-
                     </> : <></>}
                   </>
                 )
               })}
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Button sx={{
-                  backgroundColor: 'white',
-                  color: '#FF7F50',
-                  borderRadius: '10px',
-                  divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-                  '&:hover': {
-                    backgroundColor: 'white',
-                    color: 'black',
-                  }, marginTop: 10,
-                  maxWidth: 360,
-                }} onClick={handleClearAll}>Clear All</Button>
+              <Box sx={ShoppingListStyle.clearAllBox}>
+                <Button sx={ShoppingListStyle.clearAllButton} onClick={handleClearAll}>Clear All</Button>
               </Box>
             </Box>
 

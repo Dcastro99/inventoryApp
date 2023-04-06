@@ -1,5 +1,10 @@
 
 export const OptionStyle = {
+  mainContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   mainBox: {
     display: 'flex',
     justifyContent: 'center',
@@ -16,6 +21,13 @@ export const OptionStyle = {
     margin: '20px auto',
     borderRadius: 50,
     // backgroundColor: 'pink'
+  },
+  boxWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 5,
   },
 
   mainButton: {
@@ -36,6 +48,17 @@ export const OptionStyle = {
       backgroundColor: 'white',
       color: 'Tomato',
       boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    },
+    margin: 1
+  },
+  cartButton: {
+    backgroundColor: 'white',
+    color: '#626D75',
+    borderRadius: '10px',
+    divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: 'black',
     },
     margin: 1
   }
