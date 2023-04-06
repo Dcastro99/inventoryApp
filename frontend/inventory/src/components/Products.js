@@ -37,7 +37,6 @@ export default function Products({ alert }) {
   return (
     <>
       <Box sx={{
-        // backgroundColor: 'pink',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

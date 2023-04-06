@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import ProductContext from '../context/productContext';
 import { Typography, Button, TextField } from '@mui/material'
-// import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-// import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Dialog from '@mui/material/Dialog';
 import AppBar from '@mui/material/AppBar';
