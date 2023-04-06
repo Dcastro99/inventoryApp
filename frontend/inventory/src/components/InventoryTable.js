@@ -36,7 +36,6 @@ export default function BasicTable({ addToCart, handleAlert }) {
                 <TableCell align="center"></TableCell>
                 <TableCell align="center"></TableCell>
                 <TableCell align="center"></TableCell>
-
               </TableRow>
             </TableHead>
             {newProducts.map(item => (
@@ -52,7 +51,7 @@ export default function BasicTable({ addToCart, handleAlert }) {
                     {item.productName}
                   </TableCell>
                   <TableCell align="center">{item.uom}</TableCell>
-                  <TableCell align="right" sx={TableStyle.tableQty}>{item.qty}</TableCell>
+                  <TableCell align="center" >{item.qty}</TableCell>
                   <TableCell align="center">
 
                     <div>
@@ -69,6 +68,7 @@ export default function BasicTable({ addToCart, handleAlert }) {
                       <Options item={item} addToCart={addToCart} handleAlert={handleAlert} />
                     </div>
                   </TableCell>
+
 
                 </TableRow>
 

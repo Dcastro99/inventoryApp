@@ -24,6 +24,17 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
   const { updateProduct } = useContext(ProductContext);
   const [completedItem, setCompletedItem] = useState({});
 
+  const now = new Date();
+
+  let today = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(now);
+
+  console.log('today', today)
 
   //------------------Dialog------------------//
   const handleClickOpen = () => {
@@ -48,6 +59,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
 
   //------------------HANDLE CHECK------------------//
   const handleCheck = (item) => {
+    let timeStamp = today;
     const items = newItem.map(x => {
       if (x.newId === item.newId) {
         x.checked = !x.checked
@@ -70,6 +82,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             x.uom,
             x.qty = sum,
             x.id,
+            timeStamp
           );
 
           let itemToComplete = completedItem.find((item) => item.productName === x.productName);
@@ -125,6 +138,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
       }
       return x;
     });
+    console.log('timestamp', today)
     setNewItem(items);
   }
 

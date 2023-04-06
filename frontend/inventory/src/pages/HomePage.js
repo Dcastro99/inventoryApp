@@ -78,13 +78,11 @@ export default function HomePage() {
 
   //------------------DELETE ITEM IN CART------------------//
   const deleteItemInCart = (id) => {
-    console.log('delete item in cart', id)
     setCartItems(cartItems.filter((item) => item.newId !== id));
   }
 
   //------------------COMPLETE CART------------------//
   const completeCartFunction = (productName, uom, prevQty, qty, id, newId, checked) => {
-    console.log('complete cart function', productName, uom, prevQty, qty, id, newId, checked)
     let item = cartItems.find((item) => item.newId === newId);
     if (item) { // if item exists, update qty
       item.qty = qty;

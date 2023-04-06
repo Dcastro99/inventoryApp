@@ -51,7 +51,13 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
           <Grid >
             <Paper elevation={20} style={OptionStyle.paper}>
               <Grid align='center'>
-                <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>{item.productName} options</Typography>
+                <Typography sx={{ fontSize: 20, fontWeight: 'bold', marginBottom: 1 }}>{item.productName} </Typography>
+                {item.timeStamp ?
+                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5F5F5', borderRadius: 2 }}>
+                    <Typography sx={{ fontSize: 12, fontWeight: 'bold', marginRight: 2 }}>Last updated: </Typography>
+                    <Typography sx={{ fontSize: 12, fontWeight: 'bold', color: 'salmon' }}>
+                      {item.timeStamp}
+                    </Typography></Box> : null}
               </Grid>
               <Box sx={OptionStyle.boxWrapper}>
                 <NotesModal />

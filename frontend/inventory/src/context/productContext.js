@@ -41,17 +41,19 @@ export function ProductProvider({ children }) {
 
   //----------UPDATE PRODUCT----------//
 
-  const updateProduct = (productName, uom, qty, id) => {
+  const updateProduct = (productName, uom, qty, id, timeStamp) => {
+    console.log('updateProduct', productName, uom, qty, id, timeStamp)
     let item = products.find((item) => item.id === id);
     if (item) { // if item exists, update qty
       item.qty = qty;
       item.productName = productName;
       item.uom = uom;
       item.id = id;
+      item.timeStamp = timeStamp;
       setProducts([...products]);
     }
     else {
-      setProducts((prevState) => [...prevState, { productName, uom, qty, id }]);
+      setProducts((prevState) => [...prevState, { productName, uom, qty, id, timeStamp }]);
     }
   }
 
