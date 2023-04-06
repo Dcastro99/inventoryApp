@@ -19,15 +19,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ShoppingList({ cartItems, updateCart, decrementCart, deleteItemInCart }) {
-  const [newItem, setNewItem] = useState('');
+export default function ShoppingList({ cartItems, updateCart, decrementCart, deleteItemInCart, completedCart, completeCartFunction, clearCompletedCart, deleteCompleteCartItem }) {
+  const [newItem, setNewItem] = useState({});
   const [open, setOpen] = useState(false);
   const [newQty, setNewQty] = useState(0);
   const { updateProduct } = useContext(ProductContext);
-  const [completedItem, setCompletedItem] = useState([]);
-  // let map = new Map();
-  // console.log('newItemssssssw', newItem)
-  // console.log('completedItem', completedItem)
+  const [completedItem, setCompletedItem] = useState({});
+
 
   //------------------Dialog------------------//
   const handleClickOpen = () => {
@@ -55,13 +53,9 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
     const items = newItem.map(x => {
       if (x.newId === item.newId) {
         x.checked = !x.checked
-        // console.log('item checked', item.checked)
-        // console.log('x checked', x.checked)
+        x.clearAll = true
         if (x.checked) {
           let sum = parseInt(x.qty) + parseInt(newQty);
-          // console.log('x.prevQty', x.prevQty)
-          // console.log('newQty', newQty)
-          // console.log('Newqty+', sum)
           updateCart(
             x.productName,
             x.uom,
@@ -69,7 +63,8 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             x.qty = sum,
             x.id,
             x.newId,
-            x.checked
+            x.checked,
+            x.clearAll,
           )
 
           updateProduct(
@@ -78,31 +73,39 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             x.qty = sum,
             x.id,
           );
-          let itemToComplete = completedItem.find((item) => item.productName === x.productName);
-          if (itemToComplete) {
-            itemToComplete.productName = x.productName;
-            itemToComplete.uom = x.uom;
-            itemToComplete.qty = x.qty;
-            itemToComplete.id = x.id;
-            itemToComplete.newId = x.newId;
-            itemToComplete.checked = x.checked;
 
-            setCompletedItem([...completedItem]);
+          let itemToComplete = completedItem.find((item) => item.productName === x.productName);
+          // console.log('itemToComplete', itemToComplete)
+          if (itemToComplete) {
+            completeCartFunction(
+              itemToComplete.productName = x.productName,
+              itemToComplete.uom = x.uom,
+              itemToComplete.prevQty = x.prevQty,
+              itemToComplete.qty = x.qty,
+              itemToComplete.id = x.id,
+              itemToComplete.newId = x.newId,
+              itemToComplete.checked = x.checked,
+              itemToComplete.clearAll = x.clearAll,
+            )
+            setCompletedItem((prevState) => [...prevState, itemToComplete])
           }
           else {
-
-            setCompletedItem((prevState) => [...prevState, x])
-
+            completeCartFunction(
+              x.productName,
+              x.uom,
+              x.prevQty,
+              x.qty,
+              x.id,
+              x.newId,
+              x.checked,
+              x.clearAll,
+            )
           }
 
         } else if (
           !x.checked
         ) {
           let sum = parseInt(x.qty) - parseInt(x.prevQty);
-          // console.log('x.prevQty', x.prevQty)
-          // console.log('newQty', newQty)
-          // console.log('Newqty+', sum)
-          setNewQty(x.prevQty);
 
           decrementCart(
             x.productName,
@@ -127,35 +130,21 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
     setNewItem(items);
   }
 
-
   //------------------HANDLE CLEAR ALL------------------//
 
   const handleClearAll = () => {
-
-    for (let i = 0; i < newItem.length; i++) {
-      if (newItem[i].newId === completedItem[i].newId) {
-        // console.log('newItem[i].newId', newItem[i].newId)
-        deleteItemInCart(newItem[i].newId)
-        setCompletedItem(completedItem.filter((x) => x.newId !== completedItem[i].newId));
-      }
-    }
-
+    clearCompletedCart();
   }
 
 
   //------------------HANDLE UNDO------------------//
 
   const handleUndo = (item) => {
-    let items = newItem.map(x => {
+    completedItem.map(x => {
       if (x.newId === item.newId) {
         x.checked = !x.checked;
 
-
         let sum = parseInt(x.qty) - parseInt(x.prevQty);
-        // console.log('x.prevQty', x.prevQty)
-        // console.log('newQty', newQty)
-        // console.log('Newqty+', sum)
-        // console.log('x.checked', x.checked)
         setNewQty(x.prevQty);
 
         decrementCart(
@@ -178,14 +167,15 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
       }
       return x;
     });
-    setNewItem(items);
+    deleteCompleteCartItem(item.newId)
     setCompletedItem(completedItem.filter((x) => x.newId !== item.newId));
   }
 
 
   useEffect(() => {
     setNewItem(cartItems)
-  }, [cartItems])
+    setCompletedItem(completedCart)
+  }, [cartItems, completedCart])
 
 
   return (
@@ -225,11 +215,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
                 {item.checked === false ? (
                   < Box sx={ShoppingListStyle.mainListBox}>
                     <Box sx={ShoppingListStyle.itemBox}>
-                      {/* {console.log('item.checked', item.checked)} */}
-                      {item.checked === true ? (<Typography sx={ShoppingListStyle.productName}><del>{item.productName}</del></Typography>) : (<Typography sx={ShoppingListStyle.productName}>{item.productName}</Typography>)}
-
-                      {/* {console.log('itemzzzz', item)} */}
-                      {/* <Typography sx={{ color: 'lightGray' }}>{item.qty}</Typography> */}
+                      <Typography sx={ShoppingListStyle.productName}>{item.productName}</Typography>
                       {item.checked === true ?
                         (<TextField label="unselect" type='number' name='product_quantity' disabled error required onChange={(e) => handleQty(e)} sx={{
                           width: '80px',

@@ -4,7 +4,14 @@ import ShoppingList from './ShoppingList'
 import { HeaderStyle } from '../style/HeaderStyle';
 
 
-export default function Header({ cartItems, updateCart, decrementCart, deleteItemInCart }) {
+export default function Header({ cartItems,
+  updateCart, decrementCart,
+  deleteItemInCart,
+  completedCart,
+  completeCartFunction,
+  clearCompletedCart,
+  deleteCompleteCartItem
+}) {
   return (
     <Box sx={HeaderStyle.mainContainer}>
       <Box sx={HeaderStyle.titleBox}>
@@ -18,6 +25,10 @@ export default function Header({ cartItems, updateCart, decrementCart, deleteIte
               deleteItemInCart={deleteItemInCart}
               updateCart={updateCart}
               decrementCart={decrementCart}
+              completedCart={completedCart}
+              completeCartFunction={completeCartFunction}
+              clearCompletedCart={clearCompletedCart}
+              deleteCompleteCartItem={deleteCompleteCartItem}
             />
           </div>
         </Box>

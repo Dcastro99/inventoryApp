@@ -8,13 +8,16 @@ const chance = new Chance();
 
 export default function HomePage() {
   const [cartItems, setCartItems] = useState([]);
-
+  const [completedCart, setCompletedCart] = useState([]);
+  console.log('cartItems in state', cartItems)
+  console.log('completedCart in state', completedCart)
 
   //------------------ADD TO CART------------------//
   const addToCart = (productName, uom, qty, id) => {
     // console.log('before adding to cart', productName, uom, qty, id)
     const newId = chance.bb_pin();
     const checked = false;
+    const clearAll = false;
     const prevQty = qty;
     let item = cartItems.find((item) => item.productName === productName);
     if (item) {
@@ -25,16 +28,17 @@ export default function HomePage() {
       item.id = id
       item.checked = checked;
       item.cartID = newId;
+      item.clearAll = clearAll;
       setCartItems([...cartItems]);
     }
     else {
 
-      setCartItems((prevState) => [...prevState, { productName, uom, prevQty, qty, id, checked, newId }])
+      setCartItems((prevState) => [...prevState, { productName, uom, prevQty, qty, id, checked, newId, clearAll }]);
     }
   }
 
   //------------------UPDATE CART------------------//
-  const updateCart = (productName, uom, prevQty, qty, id, newId, checked) => {
+  const updateCart = (productName, uom, prevQty, qty, id, newId, checked, clearAll) => {
     let item = cartItems.find((item) => item.newId === newId);
     if (item) { // if item exists, update qty
       let sum = parseInt(qty) - parseInt(prevQty)
@@ -45,10 +49,11 @@ export default function HomePage() {
       item.id = id;
       item.newId = newId;
       item.checked = checked;
+      item.clearAll = clearAll;
       setCartItems([...cartItems]);
     }
     else {
-      setCartItems((prevState) => [...prevState, { productName, uom, prevQty, qty, id, checked, newId }]);
+      setCartItems((prevState) => [...prevState, { productName, uom, prevQty, qty, id, checked, newId, clearAll }]);
     }
   }
 
@@ -74,17 +79,61 @@ export default function HomePage() {
 
   //------------------DELETE ITEM IN CART------------------//
   const deleteItemInCart = (id) => {
+    console.log('delete item in cart', id)
     setCartItems(cartItems.filter((item) => item.newId !== id));
+  }
+
+  //------------------COMPLETE CART------------------//
+  const completeCartFunction = (productName, uom, prevQty, qty, id, newId, checked) => {
+    console.log('complete cart function', productName, uom, prevQty, qty, id, newId, checked)
+    let item = cartItems.find((item) => item.newId === newId);
+    if (item) { // if item exists, update qty
+      item.qty = qty;
+      item.prevQty = prevQty;
+      item.productName = productName;
+      item.uom = uom;
+      item.id = id;
+      item.newId = newId;
+      item.checked = checked;
+      setCompletedCart([...completedCart, item]);
+      setCartItems(cartItems.filter((item) => item.newId !== newId));
+    }
+    else {
+      setCompletedCart((prevState) => [...prevState, { productName, uom, prevQty, qty, id, checked, newId }]);
+    }
+  }
+
+  const deleteCompleteCartItem = (id) => {
+    console.log('delete cart item', id)
+    setCompletedCart(completedCart.filter((item) => item.newId !== id));
+  }
+
+  const clearCompletedCart = () => {
+    // console.log('clear completed cart')
+    // let item = cartItems.find((x) => x.clearAll === true);
+    // console.log('item === true', item)
+    // // if (item) {
+    // setCartItems(cartItems.filter((x) => x.newId !== item.newId));
+    // }
+
+
+
+
+    setCompletedCart([]);
   }
 
 
   return (
     <Box sx={{ width: '100%' }}>
       <Header
+        completedCart={completedCart}
         cartItems={cartItems}
         updateCart={updateCart}
         decrementCart={decrementCart}
         deleteItemInCart={deleteItemInCart}
+        completeCartFunction={completeCartFunction}
+        clearCompletedCart={clearCompletedCart}
+        deleteCompleteCartItem={deleteCompleteCartItem}
       />
 
       <Home addToCart={addToCart} />
