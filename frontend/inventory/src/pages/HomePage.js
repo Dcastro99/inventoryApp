@@ -103,7 +103,6 @@ export default function HomePage() {
   }
 
   const deleteCompleteCartItem = (id) => {
-    console.log('delete cart item', id)
     setCompletedCart(completedCart.filter((item) => item.newId !== id));
   }
 
