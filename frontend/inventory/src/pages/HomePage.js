@@ -9,8 +9,7 @@ const chance = new Chance();
 export default function HomePage() {
   const [cartItems, setCartItems] = useState([]);
   const [completedCart, setCompletedCart] = useState([]);
-  console.log('cartItems in state', cartItems)
-  console.log('completedCart in state', completedCart)
+
 
   //------------------ADD TO CART------------------//
   const addToCart = (productName, uom, qty, id) => {
@@ -109,16 +108,6 @@ export default function HomePage() {
   }
 
   const clearCompletedCart = () => {
-    // console.log('clear completed cart')
-    // let item = cartItems.find((x) => x.clearAll === true);
-    // console.log('item === true', item)
-    // // if (item) {
-    // setCartItems(cartItems.filter((x) => x.newId !== item.newId));
-    // }
-
-
-
-
     setCompletedCart([]);
   }
 

@@ -171,7 +171,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
     setCompletedItem(completedItem.filter((x) => x.newId !== item.newId));
   }
 
-
+  //----------------- USE EFFECT -----------------//
   useEffect(() => {
     setNewItem(cartItems)
     setCompletedItem(completedCart)
