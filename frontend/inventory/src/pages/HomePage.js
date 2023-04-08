@@ -3,13 +3,14 @@ import { Box } from '@mui/material'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Home from '../components/Home'
+import '../style/Pic.css'
+import Pantry from '../images/pantryPic1.jpg'
 import Chance from 'chance';
 const chance = new Chance();
 
 export default function HomePage() {
   const [cartItems, setCartItems] = useState([]);
   const [completedCart, setCompletedCart] = useState([]);
-
 
   //------------------ADD TO CART------------------//
   const addToCart = (productName, uom, qty, id) => {
@@ -102,6 +103,10 @@ export default function HomePage() {
 
   const deleteCompleteCartItem = (id) => {
     setCompletedCart(completedCart.filter((item) => item.newId !== id));
+    if (completedCart.length === 0) {
+      console.log('Hit in clear complete cart')
+      setCompletedCart([]);
+    }
   }
 
   const clearCompletedCart = () => {
@@ -110,7 +115,11 @@ export default function HomePage() {
 
 
   return (
-    <Box sx={{ width: '100%' }}>
+    // <div className='pic'>
+
+    <Box sx={{
+      width: '100%', display: 'flex', flexDirection: 'column'
+    }}>
       <Header
         completedCart={completedCart}
         cartItems={cartItems}
@@ -125,5 +134,6 @@ export default function HomePage() {
       <Home addToCart={addToCart} />
       <Footer />
     </Box>
+    // </div>
   )
 }

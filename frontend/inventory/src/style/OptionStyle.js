@@ -31,6 +31,9 @@ export const OptionStyle = {
   },
 
   mainButton: {
+    // border: '1px solid Tomato',
+    backgroundColor: 'WhiteSmoke',
+    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     color: 'black',
     borderRadius: '10px',
     '&:hover': {
@@ -55,8 +58,11 @@ export const OptionStyle = {
     backgroundColor: 'white',
     color: '#626D75',
     borderRadius: '10px',
-    divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    // boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     '&:hover': {
+      // boxShadow: 'rgba(0, 0, 0, 0.4) 0px 30px 90px',
+      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+
       backgroundColor: 'white',
       color: 'black',
     },

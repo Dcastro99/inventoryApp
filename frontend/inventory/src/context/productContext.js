@@ -42,7 +42,6 @@ export function ProductProvider({ children }) {
   //----------UPDATE PRODUCT----------//
 
   const updateProduct = (productName, uom, qty, id, timeStamp) => {
-    console.log('updateProduct', productName, uom, qty, id, timeStamp)
     let item = products.find((item) => item.id === id);
     if (item) { // if item exists, update qty
       item.qty = qty;

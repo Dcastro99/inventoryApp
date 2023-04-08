@@ -24,9 +24,10 @@ export default function Home({ addToCart }) {
       // backgroundColor: 'pink',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
+      // justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 10,
+      // marginBottom: 10,
+      height: '100%',
     }}>
       <InventoryTable addToCart={addToCart} handleAlert={handleAlert} />
       <Products alert={alert} />

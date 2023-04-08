@@ -13,7 +13,9 @@ export const TableStyle = {
     marginTop: 1
   },
   deleteButton: {
-    backgroundColor: '#B8B8B8',
+    // border: '1px solid Tomato',
+    // backgroundColor: '#B8B8B8',
+    backgroundColor: 'WhiteSmoke',
     color: 'Tomato',
     borderRadius: '10px',
     boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',

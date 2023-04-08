@@ -27,7 +27,7 @@ export default function BasicTable({ addToCart, handleAlert }) {
     <Box sx={TableStyle.mainContainer}>
       {newProducts.length > 0 ? (
         <TableContainer component={Paper} >
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow sx={{ backgroundColor: '	#F0F0F0' }}>
                 <TableCell>Product Name</TableCell>
@@ -38,14 +38,14 @@ export default function BasicTable({ addToCart, handleAlert }) {
                 <TableCell align="center"></TableCell>
               </TableRow>
             </TableHead>
-            {newProducts.map(item => (
 
 
-              <TableBody >
+            <TableBody >
+              {newProducts.map(item => (
 
                 <TableRow
                   key={item.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0, } }}
                 >
                   <TableCell component="th" scope="row">
                     {item.productName}
@@ -72,9 +72,9 @@ export default function BasicTable({ addToCart, handleAlert }) {
 
                 </TableRow>
 
-              </TableBody>
+              ))}
+            </TableBody>
 
-            ))}
           </Table>
 
         </TableContainer>)
