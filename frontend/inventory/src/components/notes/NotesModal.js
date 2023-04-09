@@ -27,7 +27,7 @@ export default function FullScreenDialog() {
   return (
     <div >
       <Button sx={{
-        backgroundColor: '#B8B8B8',
+        backgroundColor: 'WhiteSmoke',
         color: 'Tomato',
         borderRadius: '10px',
         divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',

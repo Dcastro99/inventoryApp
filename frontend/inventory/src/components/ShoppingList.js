@@ -5,7 +5,6 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Dialog from '@mui/material/Dialog';
 import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
@@ -23,7 +22,6 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
   const [newQty, setNewQty] = useState(0);
   const { updateProduct } = useContext(ProductContext);
   const [completedItem, setCompletedItem] = useState({});
-
   const now = new Date();
 
   let today = new Intl.DateTimeFormat('en-US', {
@@ -34,7 +32,17 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
     minute: '2-digit',
   }).format(now);
 
-  console.log('today', today)
+  const remind = () => {
+    // console.log('Don\'t forget to buy these items')
+
+  }
+
+  const interval = 30 * 24 * 60 * 60 * 1000; // 30 days
+  const reminder = setInterval(remind, interval);
+
+  setTimeout(() => {
+    clearInterval(reminder);
+  }, 2000);
 
   //------------------Dialog------------------//
   const handleClickOpen = () => {
@@ -86,7 +94,6 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
           );
 
           let itemToComplete = completedItem.find((item) => item.productName === x.productName);
-          // console.log('itemToComplete', itemToComplete)
           if (itemToComplete) {
             completeCartFunction(
               itemToComplete.productName = x.productName,
@@ -133,6 +140,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
             x.uom,
             x.qty = sum,
             x.id,
+            timeStamp
           );
         }
       }
@@ -152,6 +160,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
   //------------------HANDLE UNDO------------------//
 
   const handleUndo = (item) => {
+    let timeStamp = today;
     completedItem.map(x => {
       if (x.newId === item.newId) {
         x.checked = !x.checked;
@@ -174,6 +183,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
           x.uom,
           x.qty = sum,
           x.id,
+          timeStamp
         );
 
       }
@@ -181,6 +191,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
     });
     deleteCompleteCartItem(item.newId)
     setCompletedItem(completedItem.filter((x) => x.newId !== item.newId));
+
   }
 
   //----------------- USE EFFECT -----------------//
@@ -201,21 +212,21 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar sx={ShoppingListStyle.Appbar}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 92, flex: 1 }} variant="h2" component="div">
-              Shopping List
-            </Typography>
-
-          </Toolbar>
+        <AppBar sx={ShoppingListStyle.Appbar} >
+          {/* <Toolbar > */}
+          <IconButton
+            edge="start"
+            sx={ShoppingListStyle.closeModalButton}
+            onClick={handleClose}
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography variant="h2" component="div">
+            Shopping List
+          </Typography>
+          <Box></Box>
+          {/* </Toolbar> */}
         </AppBar>
 
 

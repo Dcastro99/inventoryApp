@@ -3,6 +3,7 @@ import { Box, Typography, Modal, Button, Grid, Paper, Stack, Alert } from '@mui/
 import { OptionStyle } from '../style/OptionStyle';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NotesModal from './notes/NotesModal';
+import Reminder from './Reminder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 export function Alerts() {
@@ -62,7 +63,8 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
               <Box sx={OptionStyle.boxWrapper}>
                 <NotesModal />
                 <div>
-                  <Button sx={OptionStyle.buttons}>Reminders</Button>
+                  {/* <Button sx={OptionStyle.buttons}>Reminders</Button> */}
+                  <Reminder />
                 </div>
                 <div>
                   <Button sx={OptionStyle.cartButton}

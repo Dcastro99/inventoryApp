@@ -2,23 +2,40 @@ export const ShoppingListStyle = {
   modalButtun: {
     backgroundColor: 'white',
     color: '#626D75',
-    borderRadius: '10px',
-    divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    borderRadius: 10,
+    padding: 2.5,
+    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     '&:hover': {
-      backgroundColor: 'white',
+      backgroundColor: 'WhiteSmoke',
       color: 'black',
     }
   },
   Appbar: {
     position: 'relative',
     backgroundColor: 'gray',
-    marginBottom: 10
+    marginBottom: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    padding: '20px 20px 20px 20px',
   },
+  closeModalButton:
+  {
+    color: 'White',
+    borderRadius: 25,
+    divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    '&:hover': {
+      color: 'red',
+    }
+  }
+  ,
   mainListBox: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 1
+    // marginTop: 1
   },
   itemBox: {
     display: 'flex',
@@ -29,7 +46,7 @@ export const ShoppingListStyle = {
     maxWidth: 500,
     boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     padding: 2,
-    borderRadius: 2
+    borderRadius: 2,
   },
   productName: {
     fontWeight: 'bold',
@@ -57,14 +74,14 @@ export const ShoppingListStyle = {
     padding: 4,
     borderRadius: 2,
     marginLeft: 5
-    ,
+
   },
   emptyCartBox: {
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 10
   },
   emptyCartText: {
     display: 'flex',
@@ -95,7 +112,7 @@ export const ShoppingListStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 1,
+    // marginTop: 1,
     width: '80%'
   },
   completedCartBox: {
@@ -133,7 +150,7 @@ export const ShoppingListStyle = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10
+    // marginTop: 10
   },
   completeProductName: {
     fontWeight: 'bold',

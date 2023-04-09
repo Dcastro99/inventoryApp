@@ -3,19 +3,19 @@ export const HeaderStyle = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 110
+    width: '100%',
+
+    // backgroundColor: 'yellow',
+
+    // height: 110
   },
-  titleBox: {
-    width: '95%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 110
-  },
+
   mainTitle: {
-    marginLeft: 15,
+
+    marginRight: 4,
     fontFamily: 'Dancing Script',
-    fontSize: 70
+    fontSize: 70,
+    // backgroundColor: 'pink',
   },
   mainBox: {
     display: 'flex',
@@ -26,6 +26,7 @@ export const HeaderStyle = {
   buttonContainer: {
     backgroundColor: 'white',
     color: '#626D75',
+    // color: 'pink',
     borderRadius: '10px',
     divShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     '&:hover': {
