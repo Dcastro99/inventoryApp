@@ -55,7 +55,7 @@ export default function Reminder() {
             >
               <CloseIcon />
             </IconButton>
-            <Typography sx={{ ml: 115, flex: 1 }} variant="h2" component="div">
+            <Typography sx={{ ml: 91, flex: 1 }} variant="h2" component="div">
               Reminders
             </Typography>
 

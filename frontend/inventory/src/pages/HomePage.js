@@ -4,7 +4,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Home from '../components/Home'
 import '../style/Pic.css'
-import Pantry from '../images/pantryPic1.jpg'
+// import Pantry from '../images/pantryPic1.jpg'
 import Chance from 'chance';
 const chance = new Chance();
 
