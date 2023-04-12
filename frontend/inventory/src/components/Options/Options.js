@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Typography, Modal, Button, Grid, Paper, Stack, Alert } from '@mui/material'
-import { OptionStyle } from '../style/OptionStyle';
+import { OptionStyle } from '../../assets/style/OptionStyle';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import NotesModal from './notes/NotesModal';
-import Reminder from './Reminder';
+import NotesModal from '../notes/NotesModal';
+import ReminderModal from '../Reminders/ReminderModal';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 export function Alerts() {
@@ -64,7 +64,7 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
                 <NotesModal />
                 <div>
                   {/* <Button sx={OptionStyle.buttons}>Reminders</Button> */}
-                  <Reminder />
+                  <ReminderModal />
                 </div>
                 <div>
                   <Button sx={OptionStyle.cartButton}

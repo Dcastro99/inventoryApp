@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { Box, Typography, Modal, Button, TextField, Select, MenuItem, Grid, Paper, InputLabel } from '@mui/material'
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
-import { ProductStyle } from '../style/ProductStyle';
-import ProductContext from '../context/productContext';
+import { ProductStyle } from '../../assets/style/ProductStyle';
+import ProductContext from '../../context/productContext';
 import Chance from 'chance';
 const chance = new Chance();
 

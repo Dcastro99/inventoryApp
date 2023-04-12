@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Box } from '@mui/material'
-import Products from './Products'
-import InventoryTable from './InventoryTable'
+import Products from '../Products/Products'
+import InventoryTable from '../InventoryTable/InventoryTable'
 
 
 

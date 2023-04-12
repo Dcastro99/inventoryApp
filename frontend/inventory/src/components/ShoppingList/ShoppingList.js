@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import ProductContext from '../context/productContext';
+import ProductContext from '../../context/productContext';
 import { Typography, Button, TextField } from '@mui/material'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { Box } from '@mui/system';
-import { ShoppingListStyle } from '../style/ShoppingListStyle';
+import { ShoppingListStyle } from '../../assets/style/ShoppingListStyle';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {

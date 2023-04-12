@@ -9,12 +9,18 @@ export const HeaderStyle = {
 
     // height: 110
   },
+  titleBox: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   mainTitle: {
 
     marginRight: 4,
     fontFamily: 'Dancing Script',
-    fontSize: 70,
+    // fontSize: 70,
     // backgroundColor: 'pink',
   },
   mainBox: {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import uuid from "react-uuid";
-import "../../style/NotesStyle.css";
+import "../../assets/style/NotesStyle.css";
 import NotesMain from './NotesMain';
 import NotesSidebar from './NotesSidebar';
 
