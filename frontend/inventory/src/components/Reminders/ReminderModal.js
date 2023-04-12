@@ -1,12 +1,7 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import { Box, Button, Dialog, AppBar, Toolbar, IconButton, Typography, Slide } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
+import Reminders from './RemindersMain';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -46,22 +41,27 @@ export default function Reminder() {
         TransitionComponent={Transition}
       >
         <AppBar sx={{ position: 'relative', backgroundColor: 'gray' }}>
-          <Toolbar>
+          {/* <Toolbar> */}
+          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 2 }}>
             <IconButton
-              edge="start"
-              color="inherit"
+              sx={{ borderRadius: 50 }}
+              // edge="start"
+              // color="inherit"
               onClick={handleClose}
               aria-label="close"
             >
               <CloseIcon />
             </IconButton>
-            <Typography sx={{ ml: 91, flex: 1 }} variant="h2" component="div">
+            <Typography sx={{ marginRight: 2 }} variant="h2" component="div">
               Reminders
             </Typography>
-
-          </Toolbar>
+            <Box></Box>
+          </Box>
+          {/* </Toolbar> */}
         </AppBar>
-
+        {/* <Box> */}
+        <Reminders />
+        {/* </Box> */}
       </Dialog>
     </div >
   );

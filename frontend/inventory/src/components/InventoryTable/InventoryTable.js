@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Button } from '@mui/material';
-import ProductContext from '../context/productContext';
-import EditModal from './EditModal';
+import ProductContext from '../../context/productContext';
+import EditModal from '../EditModal/EditModal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import Options from './Options';
-import { TableStyle } from '../style/TableStyle';
+import Options from '../Options/Options';
+import { TableStyle } from '../../assets/style/TableStyle';
 
 
 export default function BasicTable({ addToCart, handleAlert }) {

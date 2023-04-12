@@ -1,5 +1,6 @@
 export const ShoppingListStyle = {
   modalButtun: {
+    marginRight: 2,
     backgroundColor: 'white',
     color: '#626D75',
     borderRadius: 10,
