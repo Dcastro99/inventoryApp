@@ -1,10 +1,11 @@
 export const ShoppingListStyle = {
   modalButtun: {
-    marginRight: 2,
+    // marginRight: 2,
     backgroundColor: 'white',
     color: '#626D75',
-    borderRadius: 10,
-    padding: 2.5,
+    borderRadius: 25,
+    height: 62,
+    // padding: 2.5,
     boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     '&:hover': {
       backgroundColor: 'WhiteSmoke',
@@ -36,7 +37,6 @@ export const ShoppingListStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 1
   },
   itemBox: {
     display: 'flex',

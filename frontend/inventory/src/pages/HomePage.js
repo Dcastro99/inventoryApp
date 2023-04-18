@@ -4,6 +4,7 @@ import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
 import Home from '../components/Home/Home'
 import '../assets/style/Pic.css'
+import Categories from '../components/Categories/Categories'
 // import Pantry from '../images/pantryPic1.jpg'
 import Chance from 'chance';
 const chance = new Chance();
@@ -118,7 +119,7 @@ export default function HomePage() {
     // <div className='pic'>
 
     <Box sx={{
-      width: '100%', display: 'flex', flexDirection: 'column'
+      // display: 'flex', flexDirection: 'column', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'
     }}>
       <Header
         completedCart={completedCart}
@@ -130,7 +131,6 @@ export default function HomePage() {
         clearCompletedCart={clearCompletedCart}
         deleteCompleteCartItem={deleteCompleteCartItem}
       />
-
       <Home addToCart={addToCart} />
       <Footer />
     </Box>

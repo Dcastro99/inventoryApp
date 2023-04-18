@@ -18,12 +18,15 @@ export default function Products({ alert }) {
   //------------- ADD PRODUCT HANDLER --------------//
 
   const addProductHandler = (e) => {
+
     e.preventDefault();
     const formData = e.target;
+    console.log('WHAT??', formData.product_category.value)
     const id = chance.bb_pin();
     const checked = false;
     addProduct(
       formData.product_name.value,
+      formData.product_category.value,
       formData.unit_of_measure.value,
       formData.product_quantity.value,
       id,
@@ -59,10 +62,27 @@ export default function Products({ alert }) {
                   <form onSubmit={(e) => { addProductHandler(e) }}>
                     <Typography variant='h5' sx={ProductStyle.formtext}>Product</Typography>
                     <TextField label='Product Name' placeholder='Enter product name' name='product_name' fullWidth sx={ProductStyle.textFiled} />
+                    <Typography variant='h5' sx={ProductStyle.formtext}>Category</Typography>
+
+                    <InputLabel id="demo-simple-select-helper-label" >Category</InputLabel>
+                    <Select
+                      sx={{ width: 175 }}
+                      name='product_category'
+                      label="Category"
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={'spices'}>Spices</MenuItem>
+                      <MenuItem value={'grains'}>Grains</MenuItem>
+                      <MenuItem value={'sauces'}>Sauces</MenuItem>
+                      <MenuItem value={'canned goods'}>Canned Goods</MenuItem>
+                    </Select>
                     <Typography variant='h5' sx={ProductStyle.formtext}>Unit of Measure</Typography>
+
                     <InputLabel id="demo-simple-select-helper-label" >Unit of Measure</InputLabel>
                     <Select
-                      sx={{ width: 150 }}
+                      sx={{ width: 100 }}
                       name='unit_of_measure'
                       label="Unit of Measure"
                     >
@@ -75,6 +95,7 @@ export default function Products({ alert }) {
                       <MenuItem value={'Bottle'}>Bottle</MenuItem>
                       <MenuItem value={'Box'}>Box</MenuItem>
                     </Select>
+
                     <Typography variant='h5' sx={ProductStyle.formtext}>Quantity</Typography>
                     <TextField label='Quantity' type='number' name='product_quantity' sx={ProductStyle.numberTextFiled} />
                     <Button sx={ProductStyle.button} type='submit' variant='contained' fullWidth >Add Product</Button>

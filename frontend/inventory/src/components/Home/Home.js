@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Box } from '@mui/material'
 import Products from '../Products/Products'
 import InventoryTable from '../InventoryTable/InventoryTable'
+import Categories from '../Categories/Categories';
 
 
 
@@ -21,14 +22,16 @@ export default function Home({ addToCart }) {
 
   return (
     <Box sx={{
-      // backgroundColor: 'pink',
+      // backgroundColor: 'red',
       display: 'flex',
       flexDirection: 'column',
-      // justifyContent: 'center',
+
       alignItems: 'center',
+      width: '100%',
       // marginBottom: 10,
-      height: '100%',
+      // height: '100%',
     }}>
+      <Categories />
       <InventoryTable addToCart={addToCart} handleAlert={handleAlert} />
       <Products alert={alert} />
     </Box>

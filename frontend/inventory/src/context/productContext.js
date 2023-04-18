@@ -5,21 +5,41 @@ const ProductContext = createContext();
 
 export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
+  const [productSelected, setProductSelected] = useState([]);
+  const [category, setCategory] = useState('all');
+  console.log('products', products);
+  console.log('productSelected', productSelected);
+  console.log('category!!', category);
+  //--------------CATEGORY-----------------//
+
+  const selectCategory = (categoryName) => {
+    console.log('categoryName', categoryName);
+    setCategory(categoryName);
+    if (categoryName === 'all') {
+      setProductSelected(products);
+    } else setProductSelected(products.filter((item) => item.category === categoryName));
+
+
+  }
+
 
   //----------ADD PRODUCT----------//
 
-  const addProduct = (productName, uom, qty, id) => {
+  const addProduct = (productName, category, uom, qty, id) => {
+    console.log('before adding to cart', productName, category, uom, qty, id)
     let item = products.find((item) => item.productName === productName);
     if (item) { // if item exists, update qty
       let sum = parseInt(item.qty) + parseInt(qty)
       item.qty = sum;
+      item.category = category;
       item.productName = productName;
       item.uom = uom;
       item.id = id;
       setProducts([...products]);
     }
     else {
-      setProducts((prevState) => [...prevState, { productName, uom, qty, id }]);
+      setProducts((prevState) => [...prevState, { productName, category, uom, qty, id }]);
+      setProductSelected((prevState) => [...prevState, { productName, category, uom, qty, id }]);
     }
   }
 
@@ -85,7 +105,7 @@ export function ProductProvider({ children }) {
 
 
   return (
-    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, decrementProduct, addCartProduct }}>
+    <ProductContext.Provider value={{ products, productSelected, addProduct, updateProduct, deleteProduct, decrementProduct, addCartProduct, selectCategory }}>
       {children}
     </ProductContext.Provider>
   )
