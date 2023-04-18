@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, Card, CardMedia } from '@mui/material'
 import ShoppingList from '../ShoppingList/ShoppingList'
 import { HeaderStyle } from '../../assets/style/HeaderStyle';
 import logo from '../../assets/images/MP.png'
@@ -15,7 +15,15 @@ export default function Header({ cartItems,
 }) {
   return (
     <Box sx={HeaderStyle.mainContainer}>
-      <img src={logo} style={{}} alt='logo' width='90' />
+      {/* <img src={logo} alt='logo' width='90' /> */}
+      <Card elevation={0} sx={{ backgroundColor: 'transparent' }}>
+        <CardMedia
+          component="img"
+          image={logo}
+          sx={{ height: '95px', border: 'none', backgroundColor: 'transparent' }}
+          title="MyPantry"
+        />
+      </Card>
       <Box sx={HeaderStyle.titleBox}>
         <Typography sx={HeaderStyle.mainTitle} variant="h3">Welcome</Typography>
         <Typography sx={HeaderStyle.mainTitle} variant="h3">to</Typography>
@@ -23,17 +31,19 @@ export default function Header({ cartItems,
       </Box>
       <Box sx={HeaderStyle.mainBox}>
         {/* <Box sx={HeaderStyle.buttonContainer} > */}
-        <ShoppingList
-          cartItems={cartItems}
-          deleteItemInCart={deleteItemInCart}
-          updateCart={updateCart}
-          decrementCart={decrementCart}
-          completedCart={completedCart}
-          completeCartFunction={completeCartFunction}
-          clearCompletedCart={clearCompletedCart}
-          deleteCompleteCartItem={deleteCompleteCartItem}
-        />
-        {/* </Box> */}
+        <Card elevation={0} sx={{ backgroundColor: 'transparent', padding: 2 }}>
+          <ShoppingList
+            cartItems={cartItems}
+            deleteItemInCart={deleteItemInCart}
+            updateCart={updateCart}
+            decrementCart={decrementCart}
+            completedCart={completedCart}
+            completeCartFunction={completeCartFunction}
+            clearCompletedCart={clearCompletedCart}
+            deleteCompleteCartItem={deleteCompleteCartItem}
+          />
+          {/* </Box> */}
+        </Card>
       </Box>
     </Box >
   )

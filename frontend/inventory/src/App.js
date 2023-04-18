@@ -4,7 +4,15 @@ import { ProductProvider } from './context/productContext';
 //  
 function App() {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100vw', height: '100vh' }}>
+    <Box sx={{
+      // display: 'flex',
+      // flexDirection: 'row',
+      // justifyContent: 'center',
+      // alignItems: 'center',
+      width: '100vw',
+      height: '100vh',
+      // backgroundColor: 'pink',
+    }}>
       <ProductProvider>
         <HomePage />
       </ProductProvider >

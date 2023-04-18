@@ -3,12 +3,18 @@ export const TableStyle = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    marginTop: 10
+    marginTop: 10,
   },
+  // tableCell: {
+  //   padding: 1,
+
+  // },
+
   tableQty: {
     display: 'flex',
     justifyContent: 'right',
     alignItems: 'center',
+
     marginRight: 2,
     marginTop: 1
   },
