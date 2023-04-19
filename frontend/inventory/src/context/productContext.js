@@ -80,6 +80,8 @@ export function ProductProvider({ children }) {
 
   const deleteProduct = (id) => {
     setProducts(products.filter((x) => x.id !== id));
+    setProductSelected(products.filter((x) => x.id !== id));
+    setProductSelected(products.filter((item) => item.category === id.category));
   }
 
 

@@ -56,6 +56,7 @@ export default function ShoppingList({ cartItems, updateCart, decrementCart, del
 
   //------------------DELETE HANDLER------------------//
   const deleteHandler = (cartItem) => {
+    console.log('delete handler', cartItem)
     deleteItemInCart(cartItem.newId)
   }
 
