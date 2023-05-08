@@ -72,7 +72,7 @@ export const ShoppingListStyle = {
     width: '100%',
     maxWidth: 175,
     boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-    padding: 4,
+    padding: 3.85,
     borderRadius: 2,
     marginLeft: 5
 
