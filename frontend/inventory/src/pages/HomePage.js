@@ -1,15 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box } from '@mui/material'
 import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
 import Home from '../components/Home/Home'
 import '../assets/style/Pic.css'
+import axios from 'axios';
 import Chance from 'chance';
 const chance = new Chance();
 
 export default function HomePage() {
   const [cartItems, setCartItems] = useState([]);
   const [completedCart, setCompletedCart] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+
+  const handleGetAllProducts = async () => {
+    const config = {
+      method: 'GET',
+      baseURL: process.env.REACT_APP_VERCEL_URL,
+      url: '/'
+    }
+    const response = await axios(config);
+    console.log('RESPONSE', response);
+    setAllProducts(response.data);
+  }
+  useEffect(() => {
+    handleGetAllProducts();
+  }, [])
 
   //------------------ADD TO CART------------------//
   const addToCart = (productName, uom, qty, id) => {
@@ -129,7 +145,7 @@ export default function HomePage() {
         clearCompletedCart={clearCompletedCart}
         deleteCompleteCartItem={deleteCompleteCartItem}
       />
-      <Home addToCart={addToCart} />
+      <Home addToCart={addToCart} allProducts={allProducts} />
       <Footer />
     </Box>
     // </div>

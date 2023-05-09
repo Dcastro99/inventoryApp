@@ -9,7 +9,7 @@ import { TableStyle } from '../../assets/style/TableStyle';
 import '../../assets/style/Table.css'
 
 
-export default function BasicTable({ addToCart, handleAlert }) {
+export default function BasicTable({ addToCart, handleAlert, allProducts }) {
   const { productSelected } = useContext(ProductContext);
   const [newProducts, setNewProducts] = useState([]);
   const { deleteProduct } = useContext(ProductContext);
@@ -18,11 +18,18 @@ export default function BasicTable({ addToCart, handleAlert }) {
   const pagesVisited = pageNumber * resultsPage
   console.log('product selected', productSelected)
   console.log('new products', newProducts)
+
+
+
+
   useEffect(() => {
 
     setNewProducts(productSelected)
+    setNewProducts(...newProducts, allProducts)
 
-  }, [productSelected])
+  }, [productSelected, allProducts, newProducts])
+
+
 
   const deleteItem = (item) => {
     console.log('item to be deleted', item)

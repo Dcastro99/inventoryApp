@@ -3,6 +3,7 @@ import { Box, Typography, Modal, Button, TextField, Select, MenuItem, Grid, Pape
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import { ProductStyle } from '../../assets/style/ProductStyle';
 import ProductContext from '../../context/productContext';
+import axios from 'axios';
 import Chance from 'chance';
 const chance = new Chance();
 
@@ -15,6 +16,25 @@ export default function Products({ alert }) {
 
 
 
+
+
+
+
+  //------------- ADD PRODUCT CRUD --------------//
+  const addProductCRUD = async (data) => {
+    const config = {
+      method: 'POST',
+      baseURL: process.env.REACT_APP_VERCEL_URL,
+      url: '/products',
+      data: data
+    }
+    const response = await axios(config);
+    console.log('RESPONSE', response);
+  }
+
+
+
+
   //------------- ADD PRODUCT HANDLER --------------//
 
   const addProductHandler = (e) => {
@@ -24,14 +44,25 @@ export default function Products({ alert }) {
     console.log('WHAT??', formData.product_category.value)
     const id = chance.bb_pin();
     const checked = false;
+    let data = {
+      product_name: formData.product_name.value,
+      product_category: formData.product_category.value,
+      unit_of_measure: formData.unit_of_measure.value,
+      product_quantity: formData.product_quantity.value,
+      id: id,
+      checked: checked
+    }
     addProduct(
-      formData.product_name.value,
-      formData.product_category.value,
-      formData.unit_of_measure.value,
-      formData.product_quantity.value,
-      id,
-      checked
-    )
+      data.product_name,
+      data.product_category,
+      data.unit_of_measure,
+      data.product_quantity,
+      data.id,
+      data.checked
+
+    );
+    addProductCRUD(data);
+
     setOpen(false);
   }
 

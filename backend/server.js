@@ -6,7 +6,7 @@ const express = require('express');
 const cors = require('cors');
 
 //----------------CRUD----------------//
-const getAllProducts = require('./src/modules/products.js');
+const { getAllProducts, addProduct } = require('./src/modules/products.js');
 
 
 // -----------APP USING EXPRESS & JSON -------------//
@@ -19,7 +19,8 @@ app.use(express.json());
 
 //------------- PRODUCT CRUD -------------//
 
-app.get('/products', getAllProducts);
+app.get('/', getAllProducts);
+app.post('/products', addProduct);
 
 
 //------------- ERROR HANDLING -------------//

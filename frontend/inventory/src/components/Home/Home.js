@@ -7,7 +7,7 @@ import Categories from '../Categories/Categories';
 
 
 
-export default function Home({ addToCart }) {
+export default function Home({ addToCart, allProducts }) {
   const [alert, setAlert] = useState(false);
 
   const handleAlert = (x) => {
@@ -32,7 +32,7 @@ export default function Home({ addToCart }) {
       // height: '100%',
     }}>
       <Categories />
-      <InventoryTable addToCart={addToCart} handleAlert={handleAlert} />
+      <InventoryTable addToCart={addToCart} handleAlert={handleAlert} allProducts={allProducts} />
       <Products alert={alert} />
     </Box>
 

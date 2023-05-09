@@ -23,6 +23,7 @@ export function ProductProvider({ children }) {
   }
 
 
+
   //----------ADD PRODUCT----------//
 
   const addProduct = (productName, category, uom, qty, id) => {
