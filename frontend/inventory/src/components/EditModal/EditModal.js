@@ -13,10 +13,10 @@ export default function EditModal({ item }) {
   const [newName, setNewName] = useState('');
   const [newQty, setNewQty] = useState('');
   const [newUnit, setNewUnit] = useState('');
-  const { updateProduct } = useContext(ProductContext);
+  const { updateProduct, handleUpdateProduct } = useContext(ProductContext);
 
-  const updateProductHandler = (e) => {
-    let id = item.id
+  const updateHandler = (e) => {
+    let id = item._id
     e.preventDefault();
     const formData = e.target;
     // console.log('formData------>', formData)
@@ -27,7 +27,8 @@ export default function EditModal({ item }) {
       formData.product_quantity.value,
       id
     )
-
+    let data = { newName, newUnit, newQty }
+    handleUpdateProduct(id, data)
     setOpen(false);
   }
 
@@ -60,7 +61,7 @@ export default function EditModal({ item }) {
                 <Grid align='center'>
                   <AddCircleOutlinedIcon sx={ProductStyle.addIcon} />
                 </Grid>
-                <form onSubmit={(e) => { updateProductHandler(e) }}>
+                <form onSubmit={(e) => { updateHandler(e) }}>
                   <Typography variant='h5' sx={ProductStyle.formtext}>Product</Typography>
                   <TextField name='product_name' onChange={(e) => setNewName(e.target.value)} fullWidth sx={ProductStyle.textFiled} value={newName} >
                     {newName}

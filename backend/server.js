@@ -6,8 +6,8 @@ const express = require('express');
 const cors = require('cors');
 
 //----------------CRUD----------------//
-const getAllProducts = require('./src/modules/products.js');
-
+const { getAllProducts, addProduct, deleteProduct, updateProduct } = require('./src/modules/products.js');
+const { addToCart } = require('./src/modules/cart.js');
 
 // -----------APP USING EXPRESS & JSON -------------//
 const PORT = process.env.PORT || 3002;
@@ -19,7 +19,14 @@ app.use(express.json());
 
 //------------- PRODUCT CRUD -------------//
 
-app.get('/products', getAllProducts);
+app.get('/', getAllProducts);
+app.post('/products', addProduct);
+app.delete('/products/:id', deleteProduct);
+app.put('/product/:id', updateProduct);
+
+//------------- CART CRUD -------------//
+
+app.post('/carts', addToCart);
 
 
 //------------- ERROR HANDLING -------------//

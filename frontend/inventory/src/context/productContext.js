@@ -1,4 +1,5 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 
 const ProductContext = createContext();
@@ -7,9 +8,57 @@ export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [productSelected, setProductSelected] = useState([]);
   const [category, setCategory] = useState('all');
-  console.log('products', products);
-  console.log('productSelected', productSelected);
-  console.log('category!!', category);
+  console.log('products->', products);
+  console.log('productSelected->', productSelected);
+  console.log('category->!!', category);
+
+  //--------------------CRUD------------------------//
+
+  //--------------GET ALL PRODUCTS-----------------//
+  const handleGetAllProducts = async () => {
+    const config = {
+      method: 'GET',
+      baseURL: process.env.REACT_APP_VERCEL_URL,
+      url: '/'
+    }
+    const response = await axios(config);
+    console.log('RESPONSE', response);
+    setProducts(response.data);
+    setProductSelected(response.data);
+  }
+
+  //--------------DELETE PRODUCT-----------------//
+  const handleDeleteProduct = async (id) => {
+    const config = {
+      method: 'DELETE',
+      baseURL: process.env.REACT_APP_VERCEL_URL,
+      url: `/products/${id}`
+    }
+    await axios(config);
+    // console.log('RESPONSE', response);
+  }
+
+  const handleUpdateProduct = async (id, data) => {
+    const config = {
+      method: 'PUT',
+      baseURL: process.env.REACT_APP_VERCEL_URL,
+      url: `/product/${id}`,
+      data: data
+    }
+    const response = await axios(config);
+
+    console.log('RESPONSE', response);
+  }
+
+
+
+
+
+
+
+
+
+
   //--------------CATEGORY-----------------//
 
   const selectCategory = (categoryName) => {
@@ -21,6 +70,7 @@ export function ProductProvider({ children }) {
 
 
   }
+
 
 
   //----------ADD PRODUCT----------//
@@ -62,12 +112,13 @@ export function ProductProvider({ children }) {
   //----------UPDATE PRODUCT----------//
 
   const updateProduct = (productName, uom, qty, id, timeStamp) => {
-    let item = products.find((item) => item.id === id);
+    console.log('updateProduct->', productName, uom, qty, id, timeStamp)
+    let item = products.find((item) => item._id === id);
     if (item) { // if item exists, update qty
       item.qty = qty;
       item.productName = productName;
       item.uom = uom;
-      item.id = id;
+      item._id = id;
       item.timeStamp = timeStamp;
       setProducts([...products]);
     }
@@ -79,9 +130,9 @@ export function ProductProvider({ children }) {
   //----------DELETE PRODUCT----------//
 
   const deleteProduct = (id) => {
-    setProducts(products.filter((x) => x.id !== id));
-    setProductSelected(products.filter((x) => x.id !== id));
-    setProductSelected(products.filter((item) => item.category === id.category));
+    setProducts(products.filter((x) => x._id !== id));
+    setProductSelected(products.filter((x) => x._id !== id));
+    // setProductSelected(products.filter((item) => item.category === id.category));
   }
 
 
@@ -106,8 +157,22 @@ export function ProductProvider({ children }) {
 
 
 
+
   return (
-    <ProductContext.Provider value={{ products, productSelected, addProduct, updateProduct, deleteProduct, decrementProduct, addCartProduct, selectCategory }}>
+    <ProductContext.Provider
+      value={{
+        products,
+        productSelected,
+        addProduct,
+        updateProduct,
+        deleteProduct,
+        decrementProduct,
+        addCartProduct,
+        selectCategory,
+        handleGetAllProducts,
+        handleDeleteProduct,
+        handleUpdateProduct
+      }}>
       {children}
     </ProductContext.Provider>
   )

@@ -20,7 +20,7 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
   const [itemToAdd, setItemToAdd] = useState('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  console.log('What are you', item)
 
   useEffect(() => {
     setItemToAdd(item)
@@ -33,7 +33,9 @@ export default function Options({ item, addToCart, handleAlert, updateCart }) {
       newItem.productName,
       newItem.uom,
       newItem.qty,
-      newItem.id,
+      newItem._id,
+      newItem.category,
+      newItem.checked
     )
     setOpen(false);
     handleAlert(<Alerts />);
