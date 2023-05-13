@@ -12,7 +12,7 @@ export default function HomePage() {
   const [cartItems, setCartItems] = useState([]);
   const [completedCart, setCompletedCart] = useState([]);
   // const [allProducts, setAllProducts] = useState([]);
-  //hello
+
 
   const handleAddCart = async (data) => {
     console.log('DATA going to the backend', data)
