@@ -2,15 +2,18 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const productSchema = new Schema({
+const cartSchema = new Schema({
   productName: String,
   category: String,
   uom: String,
+  preQty: Number,
   qty: Number,
   id: String,
   checked: Boolean,
+  cartId: String,
+  clearAll: Boolean
 });
 
-const PRODUCT = mongoose.model('product', productSchema);
+const CART = mongoose.model('cart', cartSchema);
 
-module.exports = PRODUCT;
+module.exports = CART;

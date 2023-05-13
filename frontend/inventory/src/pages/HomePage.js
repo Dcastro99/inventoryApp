@@ -11,27 +11,28 @@ const chance = new Chance();
 export default function HomePage() {
   const [cartItems, setCartItems] = useState([]);
   const [completedCart, setCompletedCart] = useState([]);
-  const [allProducts, setAllProducts] = useState([]);
+  // const [allProducts, setAllProducts] = useState([]);
 
-  const handleGetAllProducts = async () => {
+
+  const handleAddCart = async (data) => {
+    console.log('DATA going to the backend', data)
     const config = {
-      method: 'GET',
+      method: 'POST',
       baseURL: process.env.REACT_APP_VERCEL_URL,
-      url: '/'
+      url: '/carts',
+      data: data
     }
     const response = await axios(config);
     console.log('RESPONSE', response);
-    setAllProducts(response.data);
   }
-  useEffect(() => {
-    handleGetAllProducts();
-  }, [])
+
+
 
   //------------------ADD TO CART------------------//
-  const addToCart = (productName, uom, qty, id) => {
+  const addToCart = (productName, uom, qty, id, category, checked) => {
     // console.log('before adding to cart', productName, uom, qty, id)
     const newId = chance.bb_pin();
-    const checked = false;
+    // const checked = false;
     const clearAll = false;
     const prevQty = qty;
     let item = cartItems.find((item) => item.productName === productName);
@@ -40,7 +41,8 @@ export default function HomePage() {
       item.uom = uom;
       item.prevQty = prevQty;
       item.qty = qty;
-      item.id = id
+      item._id = id
+      item.category = category;
       item.checked = checked;
       item.cartID = newId;
       item.clearAll = clearAll;
@@ -48,7 +50,8 @@ export default function HomePage() {
     }
     else {
 
-      setCartItems((prevState) => [...prevState, { productName, uom, prevQty, qty, id, checked, newId, clearAll }]);
+      setCartItems((prevState) => [...prevState, { productName, uom, prevQty, qty, id, category, checked, newId, clearAll }]);
+      handleAddCart({ productName, uom, prevQty, qty, id, category, checked, newId, clearAll })
     }
   }
 
@@ -145,7 +148,7 @@ export default function HomePage() {
         clearCompletedCart={clearCompletedCart}
         deleteCompleteCartItem={deleteCompleteCartItem}
       />
-      <Home addToCart={addToCart} allProducts={allProducts} />
+      <Home addToCart={addToCart} />
       <Footer />
     </Box>
     // </div>

@@ -22,6 +22,7 @@ export default function Products({ alert }) {
 
   //------------- ADD PRODUCT CRUD --------------//
   const addProductCRUD = async (data) => {
+    console.log('DATA going to the backend', data)
     const config = {
       method: 'POST',
       baseURL: process.env.REACT_APP_VERCEL_URL,
@@ -42,14 +43,14 @@ export default function Products({ alert }) {
     e.preventDefault();
     const formData = e.target;
     console.log('WHAT??', formData.product_category.value)
-    const id = chance.bb_pin();
+    // const id = chance.bb_pin();
     const checked = false;
     let data = {
       product_name: formData.product_name.value,
       product_category: formData.product_category.value,
       unit_of_measure: formData.unit_of_measure.value,
       product_quantity: formData.product_quantity.value,
-      id: id,
+      // id: id,
       checked: checked
     }
     addProduct(
@@ -57,7 +58,7 @@ export default function Products({ alert }) {
       data.product_category,
       data.unit_of_measure,
       data.product_quantity,
-      data.id,
+      // data.id,
       data.checked
 
     );

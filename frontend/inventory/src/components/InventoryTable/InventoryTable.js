@@ -9,10 +9,12 @@ import { TableStyle } from '../../assets/style/TableStyle';
 import '../../assets/style/Table.css'
 
 
-export default function BasicTable({ addToCart, handleAlert, allProducts }) {
+export default function BasicTable({ addToCart, handleAlert }) {
   const { productSelected } = useContext(ProductContext);
   const [newProducts, setNewProducts] = useState([]);
   const { deleteProduct } = useContext(ProductContext);
+  const { handleGetAllProducts, handleDeleteProduct } = useContext(ProductContext);
+
   const [pageNumber, setPageNumber] = useState(0);
   const resultsPage = 3
   const pagesVisited = pageNumber * resultsPage
@@ -23,18 +25,31 @@ export default function BasicTable({ addToCart, handleAlert, allProducts }) {
 
 
   useEffect(() => {
+    handleGetAllProducts();
+  }, [])
+
+
+
+  useEffect(() => {
 
     setNewProducts(productSelected)
-    setNewProducts(...newProducts, allProducts)
+    // setNewProducts([...newProducts, allProducts])
 
-  }, [productSelected, allProducts, newProducts])
+  }, [productSelected])
+
+  // useEffect(() => {
+  //   const smear = [...newProducts, ...allProducts]
+  //   setNewProducts(smear)
+  // }, [allProducts])
+
 
 
 
   const deleteItem = (item) => {
     console.log('item to be deleted', item)
-    let itemToBeDelted = item.id;
+    let itemToBeDelted = item._id;
     deleteProduct(itemToBeDelted);
+    handleDeleteProduct(itemToBeDelted);
 
   }
   const displayResults = newProducts.slice(pagesVisited, pagesVisited + resultsPage).map(item => {
