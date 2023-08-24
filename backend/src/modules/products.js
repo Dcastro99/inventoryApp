@@ -1,6 +1,7 @@
 const ProductsModel = require('../models/product');
 
 async function getAllProducts(req, res, next) {
+  console.log('getting all products')
   try {
     const allProducts = await ProductsModel.find({});
     res.status(200).send(allProducts);
@@ -17,10 +18,10 @@ async function addProduct(req, res, next) {
     if (!checkProduct) {
       const newProduct = await ProductsModel.create({
         ...req.body,
-        productName: req.body.product_name,
-        category: req.body.product_category,
-        uom: req.body.unit_of_measure,
-        qty: req.body.product_quantity,
+        productName: req.body.productName,
+        category: req.body.category,
+        uom: req.body.uom,
+        qty: req.body.qty,
         checked: req.body.checked
       })
       res.status(200).send('Product created!')
@@ -40,9 +41,10 @@ async function updateProduct(req, res) {
     const results = await ProductsModel.findOneAndUpdate(
       { _id: req.params.id },
       {
-        productName: req.body.newName,
-        uom: req.body.newUnit,
-        qty: req.body.newQty
+        productName: req.body.productName,
+        uom: req.body.uom,
+        qty: req.body.qty,
+        category: req.body.category,
       }
     );
     res.status(200).send(results);
