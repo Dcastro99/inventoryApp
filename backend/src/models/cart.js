@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const cartSchema = new Schema({
+  user:String,
   productName: String,
   category: String,
   uom: String,

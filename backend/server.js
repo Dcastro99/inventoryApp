@@ -7,7 +7,7 @@ const cors = require('cors');
 
 //----------------CRUD----------------//
 const { getAllProducts, addProduct, deleteProduct, updateProduct } = require('./src/modules/products.js');
-const { addToCart } = require('./src/modules/cart.js');
+const { addToCart,getAllCartProducts,deleteCartProduct  } = require('./src/modules/cart.js');
 
 // -----------APP USING EXPRESS & JSON -------------//
 const PORT = process.env.PORT || 3002;
@@ -26,7 +26,9 @@ app.put('/product/:id', updateProduct);
 
 //------------- CART CRUD -------------//
 
+app.get('/cart', getAllCartProducts);
 app.post('/carts', addToCart);
+app.delete('/cart/:id', deleteCartProduct);
 
 
 //------------- ERROR HANDLING -------------//

@@ -18,8 +18,9 @@ async function addProduct(req, res, next) {
     if (!checkProduct) {
       const newProduct = await ProductsModel.create({
         ...req.body,
-        productName: req.body.productName,
-        category: req.body.category,
+        user: req.body.user,
+        productName: req.body.productName.toLowerCase(),
+        category: req.body.category.toLowerCase(),
         uom: req.body.uom,
         qty: req.body.qty,
         checked: req.body.checked
@@ -41,6 +42,7 @@ async function updateProduct(req, res) {
     const results = await ProductsModel.findOneAndUpdate(
       { _id: req.params.id },
       {
+        user: req.body.user,
         productName: req.body.productName,
         uom: req.body.uom,
         qty: req.body.qty,
