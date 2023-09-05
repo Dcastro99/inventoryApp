@@ -1,9 +1,10 @@
 const ProductsModel = require('../models/product');
 
 async function getAllProducts(req, res, next) {
-  console.log('getting all products')
+  console.log('getting all products', req.query)
   try {
-    const allProducts = await ProductsModel.find({});
+    const allProducts = await ProductsModel.find({ user: req.query.user});
+    console.log('allProducts', allProducts)
     res.status(200).send(allProducts);
   } catch (err) {
     console.error(err);
