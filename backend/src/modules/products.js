@@ -1,7 +1,7 @@
 const ProductsModel = require('../models/product');
 
 async function getAllProducts(req, res, next) {
-  console.log('getting all products', req.query)
+  console.log('getting all products')
   try {
     const allProducts = await ProductsModel.find({ user: req.query.user});
     console.log('allProducts', allProducts)
@@ -13,9 +13,9 @@ async function getAllProducts(req, res, next) {
 }
 
 async function addProduct(req, res, next) {
-  console.log('adding product', req.body)
+  console.log('adding product')
   try {
-    const checkProduct = await ProductsModel.findOne({ productName: req.body.productName });
+    const checkProduct = await ProductsModel.findOne({ productName: req.body.productName, user: req.body.user });
     if (!checkProduct) {
       const newProduct = await ProductsModel.create({
         ...req.body,
@@ -26,7 +26,7 @@ async function addProduct(req, res, next) {
         qty: req.body.qty,
         checked: req.body.checked
       })
-      res.status(200).send('Product created!')
+      res.status(200).send(newProduct)
       // console.log('user created!', newUser);
     } else {
       res.status(200).send('Product already exists!!');

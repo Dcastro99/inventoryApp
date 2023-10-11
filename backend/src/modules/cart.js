@@ -5,7 +5,7 @@ const CartModel = require('../models/cart');
 async function getAllCartProducts(req, res, next) {
   console.log('getting all products')
   try {
-    const allCartProducts = await CartModel.find({});
+    const allCartProducts = await CartModel.find({nuser: req.query.user});
     res.status(200).send(allCartProducts);
   } catch (err) {
     console.error(err);
@@ -14,11 +14,11 @@ async function getAllCartProducts(req, res, next) {
 }
 
 async function addToCart(req, res, next) {
-  console.log('adding product to cart', req.body)
+  console.log('adding product to cart')
   try {
     
     const newProduct = await CartModel.create({
-
+      user: req.body.user,
       productName: req.body.productName,
       category: req.body.category,
       uom: req.body.uom,
@@ -41,7 +41,7 @@ async function addToCart(req, res, next) {
 
 
 const deleteCartProduct = async (req, res) => {
-  console.log('deleting product from cart!', req.params)
+  console.log('deleting product from cart!')
   try {
     const { id } = req.params;
     const deleted = await CartModel.findByIdAndDelete(id);

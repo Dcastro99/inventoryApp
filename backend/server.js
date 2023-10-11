@@ -8,6 +8,7 @@ const cors = require('cors');
 //----------------CRUD----------------//
 const { getAllProducts, addProduct, deleteProduct, updateProduct } = require('./src/modules/products.js');
 const { addToCart,getAllCartProducts,deleteCartProduct  } = require('./src/modules/cart.js');
+const { getAllCategories, addCategory, deleteCategory } = require('./src/modules/categories.js');
 
 // -----------APP USING EXPRESS & JSON -------------//
 const PORT = process.env.PORT || 3002;
@@ -29,6 +30,12 @@ app.put('/product/:id', updateProduct);
 app.get('/cart', getAllCartProducts);
 app.post('/carts', addToCart);
 app.delete('/cart/:id', deleteCartProduct);
+
+//------------- CATEGORY CRUD -------------//
+
+app.get('/categories', getAllCategories);
+app.post('/categories', addCategory);
+app.delete('/categories/:id', deleteCategory);
 
 
 //------------- ERROR HANDLING -------------//
